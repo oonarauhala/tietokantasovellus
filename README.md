@@ -10,4 +10,4 @@ A web application for a dinosaur park, where users can view information about th
 * Reserving feeding times
 * Searching for dinosaurs (location and info)
 * Searching for feeding times (browsing or by search criteria)
-* Admins can edit/remove/add feeding times)
+* Admins can edit/remove/add feeding times
