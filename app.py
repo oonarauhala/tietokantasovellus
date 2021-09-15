@@ -1,11 +1,11 @@
-from flask import Flask
+from flask import Flask, render_template
 
 app = Flask(__name__)
 
 @app.route("/")
 def index():
-    return "DinoPark"
+    return render_template("index.html")
 
 @app.route("/admin")
 def admin():
-    return "Admin page for admins to do admin stuff :)"
+    return render_template("admin.html")
