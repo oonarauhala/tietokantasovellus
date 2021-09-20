@@ -8,5 +8,5 @@ db = SQLAlchemy(app)
 def get_area():
     sql = "SELECT * FROM areas;"
     result = db.session.execute(sql)
-    area = result.fetchone()
+    area = result.fetchall()
     return area

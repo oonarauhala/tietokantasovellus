@@ -5,10 +5,8 @@ app = Flask(__name__)
 @app.route("/")
 def index():
     area = db.get_area()
-    try: 
-        return f"Area selected: {area[1]}"
-    except:
-        return render_template("index.html")
+    print(area)
+    return render_template("index.html", areas=area)
 
 @app.route("/admin")
 def admin():

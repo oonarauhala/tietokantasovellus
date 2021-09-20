@@ -6,6 +6,12 @@
     <title>DinoPark</title>
 </head>
 <body>
-    DinoPark home page!
+    <h1>DinoPark home page!</h1>
+    <br>
+    {% for area in areas %}
+    <button type="button">
+        {{ area.name }}
+    </button>
+    {% endfor %}
 </body>
 </html>
