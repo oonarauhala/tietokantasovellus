@@ -4,3 +4,9 @@ from os import getenv
 
 app.config["SQLALCHEMY_DATABASE_URI"] = getenv("DATABASE_URL")
 db = SQLAlchemy(app)
+
+def get_area():
+    sql = "SELECT * FROM areas;"
+    result = db.session.execute(sql)
+    area = result.fetchone()
+    return area
