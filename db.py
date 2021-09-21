@@ -10,8 +10,9 @@ def get_area():
     result = db.session.execute(sql)
     return result.fetchall()
 
-def get_area2_dinosaurs():
-    sql = "SELECT * FROM dinosaurs WHERE location = 2"
+def get_area_dinosaurs(area):
+    # No security problem in sql since area is not user input
+    sql = f"SELECT * FROM dinosaurs WHERE location = {area}"
     result = db.session.execute(sql)
     return result.fetchall()
     
