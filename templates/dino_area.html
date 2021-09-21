@@ -6,6 +6,11 @@
     <title>DinoPark</title>
 </head>
 <body>
+    <div>
+        <a href="/">
+            <img src="{{url_for('static', filename='icon.png')}}">
+        </a>
+    </div>
     {% for dinosaur in dinosaurs %}
     <div>
         <h2>{{ dinosaur.name }}</h2>
