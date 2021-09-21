@@ -5,7 +5,8 @@ from flask import render_template
 def index():
     areas = db.get_area()
     print(areas)
-    return render_template("index.html", area1=areas[0][1], area2=areas[1][1])
+    return render_template("index.html", area1=areas[0][1], area2=areas[1][1],
+    area3=areas[2][1], area4=areas[3][1])
 
 @app.route("/area1")
 def area():

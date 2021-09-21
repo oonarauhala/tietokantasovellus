@@ -1,5 +1,5 @@
 .button {
-    background-color: #4CAF50; /* Green */
+    background-color:white;
     border: none;
     color: white;
     padding: 15px 32px;
@@ -8,3 +8,18 @@
     display: inline-block;
     font-size: 16px;
   }
+#area_1 {
+    background-color: gold;
+}
+
+#area_2 {
+    background-color: darkolivegreen;
+}
+
+#area_3 {
+    background-color: dodgerblue;
+}
+
+#area_4 {
+    background-color: forestgreen;
+}

@@ -4,15 +4,25 @@
 <head>
     <meta charset="utf-8">
     <title>DinoPark</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
     <h1>DinoPark home page!</h1>
     <br>
-    
-    <button class="button" id="area_0" onclick=button_1_click()>{{ area1 }}</button>
+    <a href="/area1">
+    <button class="button" id="area_1">{{ area1 }}</button>
+    </a>
+    <br>
     <a href="/area2">
-        <button type="button" id="area_1">{{ area2 }}</button>
+        <button class="button" id="area_2">{{ area2 }}</button>
+    </a>
+    <br>
+    <a href="/area3">
+        <button class="button" id="area_3">{{ area3 }}</button>
+    </a>
+    <br>
+    <a href="/area4">
+        <button class="button" id="area_4">{{ area4 }}</button>
     </a>
     <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
 </body>
