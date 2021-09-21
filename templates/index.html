@@ -4,14 +4,16 @@
 <head>
     <meta charset="utf-8">
     <title>DinoPark</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"
 </head>
 <body>
     <h1>DinoPark home page!</h1>
     <br>
-    {% for area in areas %}
-    <button type="button">
-        {{ area.name }}
-    </button>
-    {% endfor %}
+    
+    <button class="button" id="area_0" onclick=button_1_click()>{{ area1 }}</button>
+    <a href="/">
+        <button type="button" id="area_1">{{ area2 }}</button>
+    </a>
+    <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
 </body>
 </html>
