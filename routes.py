@@ -11,22 +11,22 @@ def index():
 @app.route("/area1")
 def area():
     dinosaurs = db.get_area_dinosaurs(1)
-    return f"{dinosaurs}"
+    return render_template("dino_area.html", dinosaurs=dinosaurs)
 
 @app.route("/area2")
 def area1():
     dinosaurs = db.get_area_dinosaurs(2)
-    return f"{dinosaurs}"
+    return render_template("dino_area.html", dinosaurs=dinosaurs)
 
 @app.route("/area3")
 def area2():
     dinosaurs = db.get_area_dinosaurs(3)
-    return f"{dinosaurs}"
+    return render_template("dino_area.html", dinosaurs=dinosaurs)
 
 @app.route("/area4")
 def area3():
     dinosaurs = db.get_area_dinosaurs(4)
-    return f"{dinosaurs}"
+    return render_template("dino_area.html", dinosaurs=dinosaurs)
 
 @app.route("/admin")
 def admin4():

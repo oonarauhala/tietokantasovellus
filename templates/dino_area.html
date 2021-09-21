@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>DinoPark</title>
+</head>
+<body>
+    {% for dinosaur in dinosaurs %}
+    <div>
+        <h2>{{ dinosaur.name }}</h2>
+        <p>{{ dinosaur.description }}</p>
+        <p>Dinosaur lives in area {{ dinosaur.location }}</p>
+    </div>
+    {% endfor %}
+</body>
+</html>
