@@ -7,10 +7,10 @@ def index():
     print(areas)
     return render_template("index.html", area1=areas[0][1], area2=areas[1][1])
 
-@app.route("/area")
+@app.route("/area2")
 def area():
-    dinosaurs = db.get_area_dinosaurs()
-    return "Test"
+    dinosaurs = db.get_area2_dinosaurs()
+    return f"{dinosaurs}"
 
 @app.route("/admin")
 def admin():

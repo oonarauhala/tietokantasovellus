@@ -8,5 +8,10 @@ db = SQLAlchemy(app)
 def get_area():
     sql = "SELECT * FROM areas;"
     result = db.session.execute(sql)
-    area = result.fetchall()
-    return area
+    return result.fetchall()
+
+def get_area2_dinosaurs():
+    sql = "SELECT * FROM dinosaurs WHERE location = 2"
+    result = db.session.execute(sql)
+    return result.fetchall()
+    
