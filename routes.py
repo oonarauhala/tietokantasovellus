@@ -1,5 +1,8 @@
+#from werkzeug.wrappers import request
+from os import umask
+from werkzeug.wrappers import request
 from app import app
-from flask import render_template
+from flask import render_template, request, session
 
 @app.route("/")
 def index():
@@ -11,28 +14,38 @@ def index():
 def login():
     return render_template("login.html")
 
+@app.route("/login_result", methods=["POST"])
+def login_result():
+    username = request.form["username"]
+    password = request.form["password"]
+    # TODO password = password hash
+    result = db.get_user_credentials(username, password)
+    if result:
+        return "Login successful"
+    return "Login failed"
+
 @app.route("/area1")
-def area():
+def area1():
     dinosaurs = db.get_area_dinosaurs(1)
     return render_template("dino_area.html", dinosaurs=dinosaurs)
 
 @app.route("/area2")
-def area1():
+def area2():
     dinosaurs = db.get_area_dinosaurs(2)
     return render_template("dino_area.html", dinosaurs=dinosaurs)
 
 @app.route("/area3")
-def area2():
+def area3():
     dinosaurs = db.get_area_dinosaurs(3)
     return render_template("dino_area.html", dinosaurs=dinosaurs)
 
 @app.route("/area4")
-def area3():
+def area4():
     dinosaurs = db.get_area_dinosaurs(4)
     return render_template("dino_area.html", dinosaurs=dinosaurs)
 
 @app.route("/admin")
-def admin4():
+def admin():
     return render_template("admin.html")
 
-import db
+import db, login
