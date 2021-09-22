@@ -7,6 +7,10 @@ def index():
     return render_template("index.html", area1=areas[0][1], area2=areas[1][1],
     area3=areas[2][1], area4=areas[3][1])
 
+@app.route("/login")
+def login():
+    return render_template("login.html")
+
 @app.route("/area1")
 def area():
     dinosaurs = db.get_area_dinosaurs(1)
