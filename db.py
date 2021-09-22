@@ -20,10 +20,20 @@ def get_area_dinosaurs(area):
 def get_user_credentials(username, password):
     sql = "SELECT username, password FROM users WHERE username=:username AND password=:password"
     result = db.session.execute(sql, {"username":username, "password":password})
-    return_str = result.fetchall()
+    return_list = result.fetchall()
     # Check if result is empty
     try: 
-        if return_str[0][1] is not "":
+        if return_list[0][1] is not "":
             return True
+    except:
+        return False
+
+# Fails if username already exists bc username is unique in db
+def add_user(username, password):
+    sql = "INSERT INTO users (username, admin, password) VALUES (:username, False, :password);"
+    try: 
+        db.session.execute(sql, {"username":username, "password":password})
+        db.session.commit()
+        return True
     except:
         return False

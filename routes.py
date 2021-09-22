@@ -1,8 +1,9 @@
 #from werkzeug.wrappers import request
+from operator import add
 from os import umask
 from werkzeug.wrappers import request
 from app import app
-from flask import render_template, request, session
+from flask import render_template, request, session, redirect
 
 @app.route("/")
 def index():
@@ -18,11 +19,20 @@ def login():
 def login_result():
     username = request.form["username"]
     password = request.form["password"]
-    # TODO password = password hash
     result = db.get_user_credentials(username, password)
     if result:
         return "Login successful"
     return "Login failed"
+
+@app.route("/register_result", methods=["POST"])
+def register_result():
+    # TODO password = password hash
+    username = request.form["username_reg"]
+    password = request.form["password_reg"]
+    add_user_result = db.add_user(username, password)
+    if add_user_result:
+        return "User added!"
+    return "Jotain meni pieleen"
 
 @app.route("/area1")
 def area1():
