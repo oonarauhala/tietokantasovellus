@@ -1,9 +1,8 @@
-#from werkzeug.wrappers import request
-from operator import add
-from os import umask
 from werkzeug.wrappers import request
+from werkzeug.security import check_password_hash, generate_password_hash
 from app import app
 from flask import render_template, request, session, redirect
+
 
 @app.route("/")
 def index():
@@ -19,17 +18,21 @@ def login():
 def login_result():
     username = request.form["username"]
     password = request.form["password"]
-    result = db.get_user_credentials(username, password)
-    if result:
-        return "Login successful"
+    result = db.get_user_credentials(username)
+    print(result)
+    if not result:
+        return "Login failed"
+    if check_password_hash(result[0][1], password):
+        return "Yay"
     return "Login failed"
+
 
 @app.route("/register_result", methods=["POST"])
 def register_result():
-    # TODO password = password hash
     username = request.form["username_reg"]
     password = request.form["password_reg"]
-    add_user_result = db.add_user(username, password)
+    password_hash = generate_password_hash(password)
+    add_user_result = db.add_user(username, password_hash)
     if add_user_result:
         return "User added!"
     return "Jotain meni pieleen"
@@ -58,4 +61,4 @@ def area4():
 def admin():
     return render_template("admin.html")
 
-import db, login
+import db

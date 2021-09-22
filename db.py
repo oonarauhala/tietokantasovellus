@@ -16,17 +16,10 @@ def get_area_dinosaurs(area):
     result = db.session.execute(sql)
     return result.fetchall()
 
-# Returns F if no matching username+password combo is found in database
-def get_user_credentials(username, password):
-    sql = "SELECT username, password FROM users WHERE username=:username AND password=:password"
-    result = db.session.execute(sql, {"username":username, "password":password})
-    return_list = result.fetchall()
-    # Check if result is empty
-    try: 
-        if return_list[0][1] is not "":
-            return True
-    except:
-        return False
+def get_user_credentials(username):
+    sql = "SELECT username, password FROM users WHERE username=:username;"
+    result = db.session.execute(sql, {"username":username})
+    return result.fetchall()
 
 # Fails if username already exists bc username is unique in db
 def add_user(username, password):
