@@ -21,10 +21,15 @@ def login_result():
     result = db.get_user_credentials(username)
     print(result)
     if not result:
-        return "Login failed"
+        # Login failed: no username
+        # TODO: display msg
+        return redirect("/login")
     if check_password_hash(result[0][1], password):
-        return "Yay"
-    return "Login failed"
+        # Login successful
+        return redirect("/")
+    # Login failed: wrong password
+    # TODO: display msg
+    return redirect("/login")
 
 
 @app.route("/register_result", methods=["POST"])
@@ -34,8 +39,9 @@ def register_result():
     password_hash = generate_password_hash(password)
     add_user_result = db.add_user(username, password_hash)
     if add_user_result:
-        return "User added!"
-    return "Jotain meni pieleen"
+        return redirect("/")
+    # TODO: display msg
+    return redirect("/login")
 
 @app.route("/area1")
 def area1():
