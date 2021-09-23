@@ -8,23 +8,23 @@
 </head>
 <body>
     <!-- Content header -->
-    <div>
+    <div id="content_header">
         <a href="/">
             <img src="{{url_for('static', filename='icon.png')}}">
         </a>
+        <h1>DinoPark home page!</h1>
+        {% if session.username %}
+        <a href="/logout">
+            <button class="button" id="logout_btn">Logout</button>
+        </a>
+        {% else %}
+        <a href="/login">
+            <button class="button" id="login_btn">Login/register</button>
+        </a>
     </div>
-    <h1>DinoPark home page!</h1>
-    {% if session.username %}
-    <a href="/logout">
-        <button class="button" id="logout_btn">Logout</button>
-    </a>
-    {% else %}
-    <a href="/login">
-        <button class="button" id="login_btn">Login/register</button>
-    </a>
     {% endif %}
-    <hr>
     <!-- Content header ends-->
+    <hr>
     <br>
     <h2>Park areas</h2>
     <br>
