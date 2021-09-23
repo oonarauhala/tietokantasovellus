@@ -52,7 +52,8 @@ def register_result():
 @app.route("/area<int:id>")
 def area1(id):
     dinosaurs = db.get_area_dinosaurs(id)
-    return render_template("dino_area.html", dinosaurs=dinosaurs)
+    times = db.get_all_feeding_times()
+    return render_template("dino_area.html", dinosaurs=dinosaurs, times=times)
 
 @app.route("/admin")
 def admin():

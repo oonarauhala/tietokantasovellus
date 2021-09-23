@@ -29,6 +29,15 @@
         <h2>{{ dinosaur.name }}</h2>
         <p>{{ dinosaur.description }}</p>
         <p>Dinosaur lives in area {{ dinosaur.location }}</p>
+        <p>Available feeding show times :</p>
+        <!-- feeding times loop-->
+        {% for time in times %}
+        {% if time.id==dinosaur.id %}
+        <div>
+            <p>{{ time[0] }} at {{ time[1] }}</p>
+        </div>
+        {% endif %}
+        {% endfor %}
     </div>
     {% endfor %}
 </body>
