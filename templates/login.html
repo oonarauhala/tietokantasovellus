@@ -4,13 +4,17 @@
 <head>
     <meta charset="utf-8">
     <title>DinoPark</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <div>
+    <!-- Content header -->
+    <div id="content_header">
         <a href="/">
             <img src="{{url_for('static', filename='icon.png')}}">
         </a>
+        <h1>DinoPark home page!</h1>
     </div>
+    <!-- Content header ends-->
     <br>
     <h2>Login</h2>
     <form action="/login_result" method="POST">
