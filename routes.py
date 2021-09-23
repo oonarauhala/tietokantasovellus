@@ -49,24 +49,9 @@ def register_result():
     # TODO: display msg
     return redirect("/login")
 
-@app.route("/area1")
-def area1():
-    dinosaurs = db.get_area_dinosaurs(1)
-    return render_template("dino_area.html", dinosaurs=dinosaurs)
-
-@app.route("/area2")
-def area2():
-    dinosaurs = db.get_area_dinosaurs(2)
-    return render_template("dino_area.html", dinosaurs=dinosaurs)
-
-@app.route("/area3")
-def area3():
-    dinosaurs = db.get_area_dinosaurs(3)
-    return render_template("dino_area.html", dinosaurs=dinosaurs)
-
-@app.route("/area4")
-def area4():
-    dinosaurs = db.get_area_dinosaurs(4)
+@app.route("/area<int:id>")
+def area1(id):
+    dinosaurs = db.get_area_dinosaurs(id)
     return render_template("dino_area.html", dinosaurs=dinosaurs)
 
 @app.route("/admin")
