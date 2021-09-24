@@ -58,8 +58,10 @@ def area1(id):
 @app.route("/reserve_result", methods=["POST"])
 def reserve_result():
     # returns feeding time id
-    time = request.form["feeding_time"]
-    return f"{time[0]}"
+    time_id = request.form["feeding_time"]
+    db.add_reservation(session["username"], time_id)
+    # TODO redirect to my reservations/profile
+    return redirect("/")
 
 
 @app.route("/admin")

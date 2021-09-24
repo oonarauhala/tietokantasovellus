@@ -42,3 +42,23 @@ def add_user(username, password):
         return True
     except:
         return False
+
+# Does not check if there is an earlier reservation
+def add_reservation(username, time_id):
+    sql = f"""UPDATE users 
+                    SET reserved_time = {time_id}
+                    WHERE username = :username; 
+              UPDATE feeding_times
+                    SET available = available -1
+                    WHERE id={time_id};"""
+    db.session.execute(sql, {"username":username})
+    db.session.commit()
+
+
+# Returns false if no earlier reservation
+def check_user_reservation(username):
+    sql = f"SELECT reserved_time FROM users WHERE username = :username;"
+    result = db.session.execute(sql, {"username":username})
+    if result.fetchall()[0][0] == None:
+        return False
+    return True
