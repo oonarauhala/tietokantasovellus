@@ -24,13 +24,14 @@
     </div>
     {% endif %}
     <!-- Content header ends-->
+    <!-- Dinosaur loop -->
     {% for dinosaur in dinosaurs %}
     <div>
         <h2>{{ dinosaur.name }}</h2>
         <p>{{ dinosaur.description }}</p>
         <p>Dinosaur lives in area {{ dinosaur.location }}</p>
         <p>Available feeding show times :</p>
-        <!-- feeding times loop-->
+        <!-- Feeding times loop-->
         {% for time in times %}
         {% if time.id==dinosaur.id %}
         <div>
@@ -38,7 +39,20 @@
         </div>
         {% endif %}
         {% endfor %}
+        <!-- Feeding times loop ends-->
+        {% if session.username %}
+        <button class="button" id="reserve_btn">Reserve a time</button>
+        {% else %}
+        <script>
+            document.addEventListener('readystatechange', function(event) {
+                if (event.target.readyState === "complete") {
+                    setTimeout(() =>  { alert("Log in to reserve feeding show times!")
+                }, 3000)}
+            })
+        </script>
+        {% endif %}
     </div>
     {% endfor %}
+    <!-- Dinosaur loop ends-->
 </body>
 </html>
