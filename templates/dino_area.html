@@ -32,16 +32,18 @@
         <p>Dinosaur lives in area {{ dinosaur.location }}</p>
         <p>Available feeding show times :</p>
         <!-- Feeding times loop-->
+        <form action="/reserve_result" method="POST">
         {% for time in times %}
-        {% if time.id==dinosaur.id %}
-        <div>
-            <p>{{ time[0] }} at {{ time[1] }}</p>
-        </div>
+        {% if time.dinosaur_id==dinosaur.id %}
+        <!--<p>{{ time[0] }} at {{ time[1] }}</p>-->
+        <input type="radio" name="feeding_time" id='time.time_id' value='{{ time.time_id }}'>{{ time[0] }} at {{ time[1] }}
+        <br>
         {% endif %}
         {% endfor %}
-        <!-- Feeding times loop ends-->
         {% if session.username %}
-        <button class="button" id="reserve_btn">Reserve a time</button>
+        <input type="submit" value="Reserve time">
+        </form>
+        <!-- Feeding times loop ends-->
         {% else %}
         <script>
             document.addEventListener('readystatechange', function(event) {

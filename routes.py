@@ -55,6 +55,13 @@ def area1(id):
     times = db.get_all_feeding_times()
     return render_template("dino_area.html", dinosaurs=dinosaurs, times=times)
 
+@app.route("/reserve_result", methods=["POST"])
+def reserve_result():
+    # returns feeding time id
+    time = request.form["feeding_time"]
+    return f"{time[0]}"
+
+
 @app.route("/admin")
 def admin():
     return render_template("admin.html")
