@@ -38,6 +38,10 @@ def login_result():
     if check_password_hash(result[0][1], password):
         # Login successful
         session["username"] = username
+        # Load possible reservation to session
+        time = db.get_user_reservation(username)
+        if time[0][0] != None:
+            session["time"] = (time[0][0], time[0][1])
         return redirect("/")
     # Login failed: wrong password
     # TODO: display msg
