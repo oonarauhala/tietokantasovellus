@@ -1,3 +1,4 @@
+from sqlalchemy.orm import session
 from app import app
 from flask_sqlalchemy import SQLAlchemy
 from os import getenv
@@ -17,7 +18,9 @@ def get_area_dinosaurs(area):
     return result.fetchall()
 
 def get_all_feeding_times():
-    sql = f"SELECT TO_CHAR(f.date, 'YYYY.MM.HH'), TO_CHAR(f.time, 'HH24:MI'), d.id AS dinosaur_id, f.id AS time_id FROM feeding_times f, dinosaurs d WHERE f.dinosaur = d.id;"
+    sql = f"""SELECT TO_CHAR(f.date, 'YYYY.MM.HH'), TO_CHAR(f.time, 'HH24:MI'), d.id AS dinosaur_id, f.id AS time_id, f.available
+              FROM feeding_times f, dinosaurs d 
+              WHERE f.dinosaur = d.id;"""
     result = db.session.execute(sql)
     return result.fetchall()    
 
@@ -55,10 +58,10 @@ def add_reservation(username, time_id):
     db.session.commit()
 
 
-# Returns false if no earlier reservation
+# Returns time_id
 def check_user_reservation(username):
     sql = f"SELECT reserved_time FROM users WHERE username = :username;"
     result = db.session.execute(sql, {"username":username})
     if result.fetchall()[0][0] == None:
-        return False
-    return True
+        return None
+    return result.fetchall()[0][0]

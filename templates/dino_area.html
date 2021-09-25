@@ -32,17 +32,21 @@
         <p>Dinosaur lives in area {{ dinosaur.location }}</p>
         <p>Available feeding show times :</p>
         <!-- Feeding times loop-->
-        <form action="/reserve_result" method="POST">
-        {% for time in times %}
-        {% if time.dinosaur_id==dinosaur.id %}
-        <!--<p>{{ time[0] }} at {{ time[1] }}</p>-->
-        <input type="radio" name="feeding_time" id='time.time_id' value='{{ time.time_id }}'>{{ time[0] }} at {{ time[1] }}
-        <br>
-        {% endif %}
-        {% endfor %}
-        {% if session.username %}
-        <input type="submit" value="Reserve time">
-        </form>
+            <form action="/reserve_result" method="POST">
+            {% for time in times %}
+                {% if time.dinosaur_id==dinosaur.id %}
+                    <!-- If time is available, display normal text-->
+                    {% if time.available > 0 %}
+                        <input type="radio" name="feeding_time" id='time.time_id' value='{{ time.time_id }}'>{{ time[0] }} at {{ time[1] }}
+                    {% else %}
+                        <input type="radio" name="feeding_time" id='time.time_id' value='{{ time.time_id }}' disabled>{{ time[0] }} at {{ time[1] }}
+                    {% endif %}
+                    <br>
+                {% endif %}
+            {% endfor %}
+            {% if session.username %}
+            <input type="submit" value="Reserve time">
+            </form>
         <!-- Feeding times loop ends-->
         {% else %}
         <script>

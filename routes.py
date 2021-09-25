@@ -50,7 +50,7 @@ def register_result():
     return redirect("/login")
 
 @app.route("/area<int:id>")
-def area1(id):
+def area(id):
     dinosaurs = db.get_area_dinosaurs(id)
     times = db.get_all_feeding_times()
     return render_template("dino_area.html", dinosaurs=dinosaurs, times=times)
