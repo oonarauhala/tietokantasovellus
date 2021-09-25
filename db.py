@@ -57,11 +57,10 @@ def add_reservation(username, time_id):
     db.session.execute(sql, {"username":username})
     db.session.commit()
 
-
-# Returns time_id
-def check_user_reservation(username):
-    sql = f"SELECT reserved_time FROM users WHERE username = :username;"
+def get_user_data(username):
+    sql = f"""SELECT u.username, TO_CHAR(f.date, 'YYYY.MM.HH') AS date, TO_CHAR(f.time, 'HH24:MI') AS time 
+              FROM users u LEFT JOIN feeding_times f 
+              ON u.reserved_time=f.id 
+              WHERE username=:username;"""
     result = db.session.execute(sql, {"username":username})
-    if result.fetchall()[0][0] == None:
-        return None
-    return result.fetchall()[0][0]
+    return result.fetchall()

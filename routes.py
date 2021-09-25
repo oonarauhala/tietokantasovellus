@@ -19,6 +19,12 @@ def logout():
 def login():
     return render_template("login.html")
 
+@app.route("/profile")
+def profile():
+    user_data = db.get_user_data(session["username"])
+    print(user_data)
+    return render_template("profile.html", user_data=user_data)
+
 @app.route("/login_result", methods=["POST"])
 def login_result():
     username = request.form["username"]
@@ -60,9 +66,7 @@ def reserve_result():
     # returns feeding time id
     time_id = request.form["feeding_time"]
     db.add_reservation(session["username"], time_id)
-    # TODO redirect to my reservations/profile
-    return redirect("/")
-
+    return redirect("/profile")
 
 @app.route("/admin")
 def admin():
