@@ -27,6 +27,11 @@
     {% endif %}        
     </div>
     <!-- Content header ends-->
+    {% if user_time %}
+    <div id="warning">
+        <p>You have a reservation on {{ user_time[0] }} at {{ user_time[1] }}. If you make a new reservation, you will lose this one.</p>
+    </div>
+    {% endif %}
     <!-- Dinosaur loop -->
     {% for dinosaur in dinosaurs %}
     <div>

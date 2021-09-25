@@ -59,13 +59,24 @@ def register_result():
 def area(id):
     dinosaurs = db.get_area_dinosaurs(id)
     times = db.get_all_feeding_times()
-    return render_template("dino_area.html", dinosaurs=dinosaurs, times=times)
+    try:
+        # User has a reserved time
+        return render_template("dino_area.html", dinosaurs=dinosaurs, times=times, user_time=session["time"])
+    except:
+        return render_template("dino_area.html", dinosaurs=dinosaurs, times=times)
 
 @app.route("/reserve_result", methods=["POST"])
 def reserve_result():
-    # returns feeding time id
+    # Update db if user has an earlier reservation
+    old_time_id = db.get_user_reservation(session["username"])
+    print(old_time_id[0][0])
+    if old_time_id[0][0] is not None:
+        db.update_old_time(old_time_id[0][0])
+    # Update reservation to db
     time_id = request.form["feeding_time"]
     db.add_reservation(session["username"], time_id)
+    time = db.get_feeding_time(time_id)
+    session["time"] = (time[0][0], time[0][1])
     return redirect("/profile")
 
 @app.route("/admin")

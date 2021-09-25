@@ -64,3 +64,19 @@ def get_user_data(username):
               WHERE username=:username;"""
     result = db.session.execute(sql, {"username":username})
     return result.fetchall()
+
+def get_feeding_time(id):
+    sql = f"SELECT TO_CHAR(date, 'YYYY.MM.HH'), TO_CHAR(time, 'HH24:MI') FROM feeding_times WHERE id={id}"
+    result = db.session.execute(sql)
+    return result.fetchall()
+
+# Update old feeding time availability in case user reserves a new one
+def update_old_time(time_id):
+    sql = f"UPDATE feeding_times SET available = available +1 WHERE id={time_id};"
+    db.session.execute(sql)
+
+def get_user_reservation(username):
+    sql = "SELECT reserved_time FROM users WHERE username=:username;"
+    result = db.session.execute(sql, {"username":username})
+    return result.fetchall()
+    
