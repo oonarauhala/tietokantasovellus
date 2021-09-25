@@ -30,7 +30,7 @@
         <h2>{{ dinosaur.name }}</h2>
         <p>{{ dinosaur.description }}</p>
         <p>Dinosaur lives in area {{ dinosaur.location }}</p>
-        <p>Available feeding show times :</p>
+        <p>Feeding show times :</p>
         <!-- Feeding times loop-->
             <form action="/reserve_result" method="POST">
             {% for time in times %}
@@ -39,7 +39,7 @@
                     {% if time.available > 0 %}
                         <input type="radio" name="feeding_time" id='time.time_id' value='{{ time.time_id }}'>{{ time[0] }} at {{ time[1] }}
                     {% else %}
-                        <input type="radio" name="feeding_time" id='time.time_id' value='{{ time.time_id }}' disabled>{{ time[0] }} at {{ time[1] }}
+                        <input type="radio" name="feeding_time" id='time.time_id' value='{{ time.time_id }}' disabled>{{ time[0] }} at {{ time[1] }} Not available
                     {% endif %}
                     <br>
                 {% endif %}
