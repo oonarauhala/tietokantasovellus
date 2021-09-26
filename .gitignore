@@ -1,5 +1,6 @@
 __pycache__/
 venv/
 .env
-misc/
+misc/*
+!misc/sql_schema.sql
 .vscode
