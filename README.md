@@ -4,7 +4,7 @@
 A web application for a dinosaur park, where users can view information about the park and dinosaurs, reserve viewing for feeding times and see the park map.
 
 ## Test DinoPark on Heroku
-(https://dino-park-app.herokuapp.com/)
+https://dino-park-app.herokuapp.com/
 
 ### Features
 * User account creation and login
