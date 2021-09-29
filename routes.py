@@ -85,6 +85,32 @@ def reserve_result():
 
 @app.route("/admin")
 def admin():
-    return render_template("admin.html")
+    # TODO: if admin is logged in, display control center
+    # otherwise redirect to admin_login
+    try:
+        admin_status = db.get_admin_status(session["username"])[0]
+        print(admin_status)
+        if admin_status:
+            return render_template("admin.html")
+        return redirect("/login_admin")
+    except:
+        return redirect("/login_admin")
 
+@app.route("/login_admin")
+def login_admin():
+    return render_template("admin_login.html")
+
+@app.route("/login_result_admin", methods=["POST"])
+def login_result_admin():
+    username = request.form["username"]
+    password = request.form["password"]
+    result = db.get_user_credentials(username)
+    if not result:
+        # Login failed: no username
+        return redirect("/login_admin")
+    if check_password_hash(result[0][1], password):
+        # Login successful
+        session["username"] = username
+    return redirect("/admin")
+    
 import db

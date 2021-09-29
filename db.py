@@ -79,4 +79,9 @@ def get_user_reservation(username):
     sql = "SELECT reserved_time FROM users WHERE username=:username;"
     result = db.session.execute(sql, {"username":username})
     return result.fetchall()
+
+def get_admin_status(username: str):
+    sql = "SELECT admin FROM users WHERE username=:username;"
+    result = db.session.execute(sql, {"username":username})
+    return result.fetchone()
     
