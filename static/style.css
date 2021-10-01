@@ -32,3 +32,8 @@
     display:flex;
     justify-content: space-evenly;
 }
+
+#forms {
+    display: flex;
+    justify-content: space-evenly;
+}

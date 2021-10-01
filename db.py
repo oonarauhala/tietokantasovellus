@@ -95,3 +95,8 @@ def post_new_time(date, time, available, dinosaur_id):
     sql = "INSERT INTO feeding_times(date, time, available, dinosaur) VALUES (:date, :time, :available, :dinosaur_id);"
     db.session.execute(sql, {"date":date, "time":time, "available":available, "dinosaur_id":dinosaur_id})
     db.session.commit()
+
+def get_all_times_for_edit():
+    sql = "SELECT d.id AS dinosaur_id, f.id AS time_id, TO_CHAR(f.date, 'YYYY.MM.HH'), TO_CHAR(f.time, 'HH24:MI'), f.available FROM dinosaurs d, feeding_times f WHERE d.id=f.dinosaur;"
+    result = db.session.execute(sql)
+    return result

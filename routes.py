@@ -30,7 +30,6 @@ def login_result():
     username = request.form["username"]
     password = request.form["password"]
     result = db.get_user_credentials(username)
-    print(result)
     if not result:
         # Login failed: no username
         # TODO: display msg
@@ -86,11 +85,13 @@ def reserve_result():
 @app.route("/admin")
 def admin():
     dinosaurs = db.get_dinosaur_names_ids()
+    # Iterator -> list
+    dinosaurs=list(dinosaurs)
+    times = list(db.get_all_times_for_edit())
     try:
         admin_status = db.get_admin_status(session["username"])[0]
-        print(admin_status)
         if admin_status:
-            return render_template("admin.html", dinosaurs=dinosaurs)
+            return render_template("admin.html", dinosaurs=dinosaurs, times=times)
         return redirect("/login_admin")
     except:
         return redirect("/login_admin")

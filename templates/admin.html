@@ -4,32 +4,63 @@
 <head>
     <meta charset="utf-8">
     <title>DinoPark</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <h1>Admin control center</h1>
-    <!-- Add feeding time -->
-    Add a feeding show
-    <form action="/add_time" method="POST">
-    Date:
-    <input type="date" name="date">
-    <br>
-    Time:
-    <input type="time" name="time">
-    <br>
-    Number of slots:
-    <input type="number" name="available">
-    <br>
-    Dinosaur:
-    <select name="dinosaur_id">
-        <!-- Dinosaur dropdown list -->
-        {% for dinosaur in dinosaurs %}
-        <option value="{{ dinosaur.id }}">{{ dinosaur.name }}</option>
-        {% endfor %}
-        <!-- Dinosaur dropdown list ends -->
-    </select>
-    <br>
-    <input type="submit" value="Send">
-    </form>
-
+    <h1 id="testi">Admin control center</h1>
+    <div id="forms">
+        <div id="form">
+            <!-- Add feeding time -->    
+            Add a feeding show
+            <br>
+            <br>
+            <form action="/add_time" method="POST">
+                Date:
+                <input type="date" name="date">
+                <br>
+                Time:
+                <input type="time" name="time">
+                <br>
+                Number of slots:
+                <input type="number" name="available">
+                <br>
+                Dinosaur:
+                <select name="dinosaur_id">
+                    <!-- Dinosaur dropdown list -->
+                    {% for dinosaur in dinosaurs %}
+                    <option value="{{ dinosaur.id }}">{{ dinosaur.name }}</option>
+                    {% endfor %}
+                    <!-- Dinosaur dropdown list ends -->
+                </select>
+                <br>
+                <input type="submit" value="Send">
+            </form>
+        </div>
+        <div id="form">
+            <!-- Feeding time update -->
+            Update a feeding show info
+            <br>
+            <br>
+            <form action="/update_time" method="POST">
+                Select dinosaur:
+                <!-- Dinosaur dropdown list -->
+                <select name="dinosaur_id" id="select" onchange="show_radio_by_dino()">
+                {% for dinosaur in dinosaurs %}
+                    <option value="{{ dinosaur.id }}">{{ dinosaur.name }}</option>
+                {% endfor %}
+                <!-- Dinosaur dropdown list ends -->
+                </select>
+                <br>
+                <!-- Create hidden element -->
+                    {% for time in times %}
+                        <input class="update_radio" type="radio" name="{{ time.dinosaur_id }}" value="{{ time.time_id }}" id="{{ time.dinosaur_id }}" hidden>
+                    {% endfor %}
+                <!-- Create hidden element ends -->
+            </form>
+            <!-- Feeding time update ends -->
+        </div>
+    
+    </div>
+    <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
 </body>
 </html>
