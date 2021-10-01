@@ -85,13 +85,12 @@ def reserve_result():
 
 @app.route("/admin")
 def admin():
-    # TODO: if admin is logged in, display control center
-    # otherwise redirect to admin_login
+    dinosaurs = db.get_dinosaur_names_ids()
     try:
         admin_status = db.get_admin_status(session["username"])[0]
         print(admin_status)
         if admin_status:
-            return render_template("admin.html")
+            return render_template("admin.html", dinosaurs=dinosaurs)
         return redirect("/login_admin")
     except:
         return redirect("/login_admin")
@@ -112,5 +111,16 @@ def login_result_admin():
         # Login successful
         session["username"] = username
     return redirect("/admin")
+
+@app.route("/add_time", methods=["POST"])
+def add_time():
+    date = request.form["date"]
+    time = request.form["time"]
+    available = request.form["available"]
+    dinosaur_id = request.form["dinosaur_id"]
+    print(date, time, available, dinosaur_id)
+    db.post_new_time(date, time, available, dinosaur_id)
+    return redirect("/admin")
+
     
 import db

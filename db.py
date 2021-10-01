@@ -74,6 +74,7 @@ def get_feeding_time(id):
 def update_old_time(time_id):
     sql = f"UPDATE feeding_times SET available = available +1 WHERE id={time_id};"
     db.session.execute(sql)
+    db.session.commit()
 
 def get_user_reservation(username):
     sql = "SELECT reserved_time FROM users WHERE username=:username;"
@@ -85,3 +86,12 @@ def get_admin_status(username: str):
     result = db.session.execute(sql, {"username":username})
     return result.fetchone()
     
+def get_dinosaur_names_ids():
+    sql = "SELECT id, name FROM dinosaurs;"
+    result = db.session.execute(sql)
+    return result
+
+def post_new_time(date, time, available, dinosaur_id):
+    sql = "INSERT INTO feeding_times(date, time, available, dinosaur) VALUES (:date, :time, :available, :dinosaur_id);"
+    db.session.execute(sql, {"date":date, "time":time, "available":available, "dinosaur_id":dinosaur_id})
+    db.session.commit()
