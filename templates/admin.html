@@ -53,7 +53,9 @@
                 <br>
                 <!-- Create hidden element -->
                     {% for time in times %}
-                        <input class="update_radio" type="radio" name="{{ time.dinosaur_id }}" value="{{ time.time_id }}" id="{{ time.dinosaur_id }}" hidden>
+                    <div class="update_radio" name="{{ time.dinosaur_id }}" hidden>
+                        <input type="radio" value="{{ time.time_id }}" id="{{ time.dinosaur_id }}"> {{ time.date }} at {{ time.time }}
+                    </div>
                     {% endfor %}
                 <!-- Create hidden element ends -->
             </form>
