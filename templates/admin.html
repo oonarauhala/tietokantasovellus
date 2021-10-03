@@ -11,8 +11,7 @@
     <div id="forms">
         <div id="form">
             <!-- Add feeding time -->    
-            Add a feeding show
-            <br>
+            <h3>Add a feeding show</h3>
             <br>
             <form action="/add_time" method="POST">
                 Date:
@@ -38,8 +37,7 @@
         </div>
         <div id="form">
             <!-- Feeding time update -->
-            Update a feeding show info
-            <br>
+            <h3>Update a feeding show info</h3>
             <br>
             <form action="/update_time" method="POST">
                 Select dinosaur:
@@ -58,6 +56,17 @@
                     </div>
                     {% endfor %}
                 <!-- Create hidden element ends -->
+                <br>
+                New date:
+                <input type="date" name="date">
+                <br>
+                New time:
+                <input type="time" name="time">
+                <br>
+                New number of slots:
+                <input type="number" name="available">
+                <br>
+                <input type="submit" value="Send">
             </form>
             <!-- Feeding time update ends -->
         </div>
