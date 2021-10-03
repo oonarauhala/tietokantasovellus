@@ -9,8 +9,8 @@
 <body>
     <h1 id="testi">Admin control center</h1>
     <div id="forms">
+        <!-- Add feeding time -->  
         <div id="form">
-            <!-- Add feeding time -->    
             <h3>Add a feeding show</h3>
             <br>
             <form action="/add_time" method="POST">
@@ -35,8 +35,9 @@
                 <input type="submit" value="Send">
             </form>
         </div>
+        <!-- Add feeding time ends -->
+        <!-- Feeding time update -->
         <div id="form">
-            <!-- Feeding time update -->
             <h3>Update a feeding show info</h3>
             <br>
             <form action="/update_time" method="POST">
@@ -68,9 +69,23 @@
                 <br>
                 <input type="submit" value="Send">
             </form>
-            <!-- Feeding time update ends -->
         </div>
-    
+        <!-- Feeding time update ends -->
+        <!-- Feeding time delete -->
+        <div id="form">
+            <h3>Delete a feeding show</h3>
+            <br>
+            <form action="/delete_time" method="POST">
+                Select dinosaur:
+                <!-- Dinosaur dropdown list -->
+                <select name="dinosaur_id" id="select">
+                    {% for dinosaur in dinosaurs %}
+                        <option value="{{ dinosaur.id }}">{{ dinosaur.name }}</option>
+                    {% endfor %}
+                <!-- Dinosaur dropdown list ends -->
+            </form>
+        </div>
+        <!-- Feeding time delete ends-->
     </div>
     <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
 </body>
