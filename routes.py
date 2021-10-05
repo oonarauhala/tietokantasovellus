@@ -130,9 +130,15 @@ def update_time():
     available = request.form["available"]
     dinosaur_id = request.form["dinosaur_id"]
     time_id = request.form[str(dinosaur_id)]
-    print("Update time_id:")
-    print(time_id)
     # TODO: post to database
     return redirect("/admin")
+
+@app.route("/delete_time", methods=["POST"])
+def delete_time():
+    dinosaur_id = request.form["dinosaur_id"]
+    time_id = request.form[str(dinosaur_id)]
+    # TODO: post to database
+    return redirect("/admin")
+
     
 import db
