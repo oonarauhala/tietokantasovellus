@@ -137,7 +137,7 @@ def update_time():
 def delete_time():
     dinosaur_id = request.form["dinosaur_id"]
     time_id = request.form[str(dinosaur_id)]
-    # TODO: post to database
+    db.delete_time(time_id)
     return redirect("/admin")
 
     

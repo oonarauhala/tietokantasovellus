@@ -107,3 +107,8 @@ def post_time_update(date, time, available, time_id):
             WHERE id=:time_id"""
     db.session.execute(sql, {"date":date, "time":time, "available":available, "time_id":time_id})
     db.session.commit()
+
+def delete_time(time_id):
+    sql = "DELETE FROM feeding_times WHERE id=:time_id"
+    db.session.execute(sql, {"time_id":time_id})
+    db.session.commit()
