@@ -140,5 +140,8 @@ def delete_time():
     db.delete_time(time_id)
     return redirect("/admin")
 
+@app.route("/search")
+def search():
+    return render_template("search.html")
     
 import db
