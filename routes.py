@@ -130,7 +130,7 @@ def update_time():
     available = request.form["available"]
     dinosaur_id = request.form["dinosaur_id"]
     time_id = request.form[str(dinosaur_id)]
-    # TODO: post to database
+    db.post_time_update(date, time, available, time_id)
     return redirect("/admin")
 
 @app.route("/delete_time", methods=["POST"])

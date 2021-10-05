@@ -100,3 +100,10 @@ def get_all_times_for_edit():
     sql = "SELECT d.id AS dinosaur_id, f.id AS time_id, TO_CHAR(f.date, 'YYYY.MM.HH') AS date, TO_CHAR(f.time, 'HH24:MI') AS time, f.available FROM dinosaurs d, feeding_times f WHERE d.id=f.dinosaur;"
     result = db.session.execute(sql)
     return result
+
+def post_time_update(date, time, available, time_id):
+    sql = """UPDATE feeding_times 
+            SET date=:date, time=:time, available=:available
+            WHERE id=:time_id"""
+    db.session.execute(sql, {"date":date, "time":time, "available":available, "time_id":time_id})
+    db.session.commit()
