@@ -43,7 +43,7 @@
             <form action="/update_time" method="POST">
                 Select dinosaur:
                 <!-- Dinosaur dropdown list -->
-                <select name="dinosaur_id" id="select" onchange="show_radio_in_update()">
+                <select name="dinosaur_id" id="select_update" onchange="show_radio_in_update('update_radio', 'select_update')">
                 {% for dinosaur in dinosaurs %}
                     <option value="{{ dinosaur.id }}">{{ dinosaur.name }}</option>
                 {% endfor %}
@@ -78,11 +78,20 @@
             <form action="/delete_time" method="POST">
                 Select dinosaur:
                 <!-- Dinosaur dropdown list -->
-                <select name="dinosaur_id" id="select">
+                <select name="dinosaur_id" id="select_delete" onchange="show_radio_in_update('delete_radio', 'select_delete')">
                     {% for dinosaur in dinosaurs %}
                         <option value="{{ dinosaur.id }}">{{ dinosaur.name }}</option>
                     {% endfor %}
+                </select>
                 <!-- Dinosaur dropdown list ends -->
+                <br>
+                <!-- Create hidden elements -->
+                {% for time in times %}
+                    <div class="delete_radio" name="{{ time.dinosaur_id }}" hidden>
+                        <input type="radio" value="{{ time.time_id }}" name="{{ time.dinosaur_id }}"> {{ time.date }} at {{ time.time }}
+                    </div>
+                {% endfor %}
+                <!-- Create hidden elements ends -->
             </form>
         </div>
         <!-- Feeding time delete ends-->
