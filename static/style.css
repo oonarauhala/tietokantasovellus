@@ -42,3 +42,19 @@
     display: flex;
     justify-content: space-evenly;
 }
+
+#search_browse_content {
+    display:flex;
+    justify-content: space-evenly;
+}
+
+.content_box {
+    display:flex;
+    flex-direction: column;
+    max-width: 20em;
+}
+
+.dino_box {
+    overflow: hidden;
+    max-height: 20em;
+}

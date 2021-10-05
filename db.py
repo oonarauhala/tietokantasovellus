@@ -18,7 +18,7 @@ def get_area_dinosaurs(area):
     return result.fetchall()
 
 def get_all_feeding_times():
-    sql = f"""SELECT TO_CHAR(f.date, 'YYYY.MM.HH'), TO_CHAR(f.time, 'HH24:MI'), d.id AS dinosaur_id, f.id AS time_id, f.available
+    sql = f"""SELECT TO_CHAR(f.date, 'YYYY.MM.DD'), TO_CHAR(f.time, 'HH24:MI'), d.id AS dinosaur_id, f.id AS time_id, f.available
               FROM feeding_times f, dinosaurs d 
               WHERE f.dinosaur = d.id;"""
     result = db.session.execute(sql)
@@ -27,7 +27,7 @@ def get_all_feeding_times():
 # Not in use atm
 def get_dino_feeding_times(dinosaur_id):
     # No security problem since dinosaur_id is not user input
-    sql = f"SELECT TO_CHAR(date, 'YYYY:MM:HH'), TO_CHAR(time, 'HH24:MI') FROM feeding_times WHERE dinosaur = {dinosaur_id};"
+    sql = f"SELECT TO_CHAR(date, 'YYYY:MM:DD'), TO_CHAR(time, 'HH24:MI') FROM feeding_times WHERE dinosaur = {dinosaur_id};"
     result = db.session.execute(sql)
     return result.fetchall()
 
@@ -58,7 +58,7 @@ def add_reservation(username, time_id):
     db.session.commit()
 
 def get_user_data(username):
-    sql = f"""SELECT u.username, TO_CHAR(f.date, 'YYYY.MM.HH') AS date, TO_CHAR(f.time, 'HH24:MI') AS time 
+    sql = f"""SELECT u.username, TO_CHAR(f.date, 'YYYY.MM.DD') AS date, TO_CHAR(f.time, 'HH24:MI') AS time 
               FROM users u LEFT JOIN feeding_times f 
               ON u.reserved_time=f.id 
               WHERE username=:username;"""
@@ -66,7 +66,7 @@ def get_user_data(username):
     return result.fetchall()
 
 def get_feeding_time(id):
-    sql = f"SELECT TO_CHAR(date, 'YYYY.MM.HH'), TO_CHAR(time, 'HH24:MI') FROM feeding_times WHERE id={id}"
+    sql = f"SELECT TO_CHAR(date, 'YYYY.MM.DD'), TO_CHAR(time, 'HH24:MI') FROM feeding_times WHERE id={id}"
     result = db.session.execute(sql)
     return result.fetchall()
 
@@ -97,7 +97,7 @@ def post_new_time(date, time, available, dinosaur_id):
     db.session.commit()
 
 def get_all_times_for_edit():
-    sql = "SELECT d.id AS dinosaur_id, f.id AS time_id, TO_CHAR(f.date, 'YYYY.MM.HH') AS date, TO_CHAR(f.time, 'HH24:MI') AS time, f.available FROM dinosaurs d, feeding_times f WHERE d.id=f.dinosaur;"
+    sql = "SELECT d.id AS dinosaur_id, f.id AS time_id, TO_CHAR(f.date, 'YYYY.MM.DD') AS date, TO_CHAR(f.time, 'HH24:MI') AS time, f.available FROM dinosaurs d, feeding_times f WHERE d.id=f.dinosaur;"
     result = db.session.execute(sql)
     return result
 
@@ -112,3 +112,16 @@ def delete_time(time_id):
     sql = "DELETE FROM feeding_times WHERE id=:time_id"
     db.session.execute(sql, {"time_id":time_id})
     db.session.commit()
+
+def get_todays_times():
+    sql = """SELECT TO_CHAR(f.date, 'YYYY.MM.DD') AS date, TO_CHAR(f.time, 'HH24:MI') AS time, d.name 
+            FROM feeding_times f, dinosaurs d WHERE d.id=f.dinosaur AND f.date=CURRENT_DATE 
+            ORDER BY date, time;"""
+    return db.session.execute(sql)
+
+def get_random_dino_info():
+    sql = """SELECT d.id, d.name, d.description, a.name AS area FROM dinosaurs d, areas a 
+            WHERE d.location=a.id 
+            ORDER BY random() 
+            LIMIT 5;"""
+    return db.session.execute(sql)

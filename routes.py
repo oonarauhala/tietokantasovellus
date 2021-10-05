@@ -142,6 +142,8 @@ def delete_time():
 
 @app.route("/search")
 def search():
-    return render_template("search.html")
+    times = list(db.get_todays_times())
+    dinosaurs = list(db.get_random_dino_info())
+    return render_template("search.html", times=times, dinosaurs=dinosaurs)
     
 import db
