@@ -119,9 +119,20 @@ def add_time():
     time = request.form["time"]
     available = request.form["available"]
     dinosaur_id = request.form["dinosaur_id"]
-    print(date, time, available, dinosaur_id)
+    #print(date, time, available, dinosaur_id)
     db.post_new_time(date, time, available, dinosaur_id)
     return redirect("/admin")
 
+@app.route("/update_time", methods=["POST"])
+def update_time():
+    date = request.form["date"]
+    time = request.form["time"]
+    available = request.form["available"]
+    dinosaur_id = request.form["dinosaur_id"]
+    time_id = request.form[str(dinosaur_id)]
+    print("Update time_id:")
+    print(time_id)
+    # TODO: post to database
+    return redirect("/admin")
     
 import db
