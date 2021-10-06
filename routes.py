@@ -50,12 +50,14 @@ def login_result():
 def register_result():
     username = request.form["username_reg"]
     password = request.form["password_reg"]
-    password_hash = generate_password_hash(password)
-    add_user_result = db.add_user(username, password_hash)
-    if add_user_result:
-        session["username"] = username
-        return redirect("/")
-    # TODO: display msg
+    # Validate inputs
+    if validator.validate_string(username) and validator.validate_string(password):
+        password_hash = generate_password_hash(password)
+        add_user_result = db.add_user(username, password_hash)
+        if add_user_result:
+            session["username"] = username
+            return redirect("/")
+        # TODO: display msg
     return redirect("/login")
 
 @app.route("/area<int:id>")
@@ -146,4 +148,4 @@ def search():
     dinosaurs = list(db.get_random_dino_info())
     return render_template("search.html", times=times, dinosaurs=dinosaurs)
     
-import db
+import db, validator
