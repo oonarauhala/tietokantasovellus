@@ -42,13 +42,12 @@
         </div>
     </div>
     <br>
-    <div id="search_browse_content">
+    <div class="content_area">
         <div class="content_box">
             <h3>Feeding shows today</h3>
             {% for time in times %}
             <div class="time_box">
-                {{ time.name }}
-                <br>
+                <h4>{{ time.name }}</h4>
                 {{ time.date }}
                 at {{ time.time }}
            </div>

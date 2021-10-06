@@ -41,5 +41,16 @@
             </form>
         </div>
     </div>
+    <div class="content_area">
+        <div class="content_box">
+            <h3>Results</h3>
+            {% for time in times %}
+            <div class="time_box">
+                <h4>{{ time.name }}</h4>
+                {{ time.date }} at {{ time.time }}
+            </div>
+            {% endfor %}
+        </div>
+    </div>
 </body>
 </html>

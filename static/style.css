@@ -48,7 +48,7 @@
     justify-content: space-evenly;
 }
 
-#search_browse_content {
+.content_area {
     display:flex;
     justify-content: space-evenly;
 }
@@ -62,4 +62,8 @@
 .dino_box {
     overflow: hidden;
     max-height: 20em;
+}
+
+.time_box {
+    overflow: hidden;
 }

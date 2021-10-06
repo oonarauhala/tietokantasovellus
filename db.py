@@ -125,3 +125,9 @@ def get_random_dino_info():
             ORDER BY random() 
             LIMIT 5;"""
     return db.session.execute(sql)
+
+def get_search_results_date(date: str):
+    sql = f"""SELECT TO_CHAR(f.date, 'YYYY.MM.DD') AS date, TO_CHAR(f.time, 'HH24:MI') AS time, d.name 
+            FROM feeding_times f, dinosaurs d 
+            WHERE d.id=f.dinosaur AND date='{date}'::DATE;"""
+    return db.session.execute(sql)

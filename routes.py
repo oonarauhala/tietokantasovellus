@@ -150,22 +150,12 @@ def search():
 
 @app.route("/search_result", methods=["POST"])
 def search_result():
-    try:
-        try:
-            # Search using text
-            term = request.form["search_term"]
-            return render_template("/search_result.html")
-        except:
-            pass
-        try:
-            # Search using date
-            date = request.form["search_date"]
-            return render_template("/search_result.html")
-        except:
-            pass
-    # No input
-    except:
-        # TODO: message user (?)
-        return render_template("/search.html")
+    # Search using text
+    #term = request.form["search_term"]
+
+    date = request.form["search_date"]
+    result_dates= list(db.get_search_results_date(date))
+    return render_template("/search_result.html", times=result_dates)
+
 
 import db, validator
