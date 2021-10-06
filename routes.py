@@ -147,5 +147,25 @@ def search():
     times = list(db.get_todays_times())
     dinosaurs = list(db.get_random_dino_info())
     return render_template("search.html", times=times, dinosaurs=dinosaurs)
-    
+
+@app.route("/search_result", methods=["POST"])
+def search_result():
+    try:
+        try:
+            # Search using text
+            term = request.form["search_term"]
+            return render_template("/search_result.html")
+        except:
+            pass
+        try:
+            # Search using date
+            date = request.form["search_date"]
+            return render_template("/search_result.html")
+        except:
+            pass
+    # No input
+    except:
+        # TODO: message user (?)
+        return render_template("/search.html")
+
 import db, validator

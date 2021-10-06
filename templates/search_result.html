@@ -41,30 +41,5 @@
             </form>
         </div>
     </div>
-    <br>
-    <div id="search_browse_content">
-        <div class="content_box">
-            <h3>Feeding shows today</h3>
-            {% for time in times %}
-            <div class="time_box">
-                {{ time.name }}
-                <br>
-                {{ time.date }}
-                at {{ time.time }}
-           </div>
-           <br>
-           {% endfor %}
-        </div>
-        <div class="content_box">
-            <h3>Browse dinosaurs</h3>
-            {% for dino in dinosaurs %}
-            <div class="dino_box">
-                <h4>{{ dino.name }}</h5>
-                {{ dino.description }}
-            </div>
-            <br>
-            {% endfor %}
-        </div>
-    </div>
 </body>
 </html>

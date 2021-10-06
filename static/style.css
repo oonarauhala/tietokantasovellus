@@ -38,8 +38,13 @@
     justify-content: space-evenly;
 }
 
-#search {
+#search_text {
     display: flex;
+    justify-content: space-evenly;
+}
+
+#search_box {
+    display:flex;
     justify-content: space-evenly;
 }
 
