@@ -152,10 +152,11 @@ def search():
 def search_result():
     # Search using text
     #term = request.form["search_term"]
-
-    date = request.form["search_date"]
-    result_dates= list(db.get_search_results_date(date))
-    return render_template("/search_result.html", times=result_dates)
-
+    try:
+        date = request.form["search_date"]
+        result_dates= list(db.get_search_results_date(date))
+        return render_template("/search_result.html", times=result_dates)
+    except:
+        return redirect("/search")
 
 import db, validator
