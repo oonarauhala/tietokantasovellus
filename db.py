@@ -124,3 +124,16 @@ def get_search_results_date(date: str):
             FROM feeding_times f, dinosaurs d 
             WHERE d.id=f.dinosaur AND date='{date}'::DATE;"""
     return db.session.execute(sql)
+
+def get_search_results_text(text:str):
+    text = text.lower()
+    results = []
+    # Search fields (dinosaurs.name, dinosaurs.description, areas.name) 
+    # and return all matches
+    sql = "SELECT name FROM dinosaurs WHERE LOWER(name) LIKE :text;"
+    results.append(db.session.execute(sql, {"text":text}).fetchall())
+    sql = "SELECT description FROM dinosaurs WHERE LOWER(description) LIKE :text;"
+    results.append(db.session.execute(sql, {"text":f"%{text}%"}).fetchall())
+    sql = "SELECT name FROM areas WHERE LOWER(name) LIKE :text;"
+    results.append(db.session.execute(sql, {"text":text}).fetchall())
+    return results

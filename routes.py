@@ -151,12 +151,27 @@ def search():
 @app.route("/search_result", methods=["POST"])
 def search_result():
     # Search using text
-    #term = request.form["search_term"]
     try:
         date = request.form["search_date"]
         result_dates= list(db.get_search_results_date(date))
         return render_template("/search_result.html", times=result_dates)
     except:
-        return redirect("/search")
+        pass
+    # Search using text
+    try:
+        text = request.form["search_text"]
+        # TODO validate date
+        text_result = list(db.get_search_results_text(text))
+        # Check if result is not empty
+        counter = 0
+        for result_list in text_result:
+            if len(result_list) == 0:
+                counter += 1
+            if counter == 3:
+                return redirect("/search")
+        return render_template("/search_result.html", text_results=text_result)
+    except:
+        pass
+    return redirect("/search")
 
 import db, validator

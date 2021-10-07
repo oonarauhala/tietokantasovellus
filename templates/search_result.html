@@ -44,12 +44,30 @@
     <div class="content_area">
         <div class="content_box">
             <h3>Results</h3>
-            {% for time in times %}
-            <div class="time_box">
-                <h4>{{ time.name }}</h4>
-                {{ time.date }} at {{ time.time }}
-            </div>
-            {% endfor %}
+            <!-- Time result -->
+            {% if times %}
+                {% for time in times %}
+                <div class="time_box">
+                    <h4>{{ time.name }}</h4>
+                    {{ time.date }} at {{ time.time }}
+                </div>
+                {% endfor %}
+            {% endif %}
+            <!-- Text result -->
+            {% if text_results %}
+                <!-- result[0] (dinosaur.name) -->
+                {% for name in text_results[0] %}
+                    <h4>{{ name.name }}</h4>
+                {% endfor %}
+                <!-- result[1] (dinosaur.description) -->
+                {% for description in text_results[1] %}
+                    <h4>{{description.description}}</h4>
+                {% endfor %}
+                <!-- result[2] (area.name) -->
+                {% for name in text_results[2] %}
+                    <h4>{{name.name}}</h4>
+                {% endfor %}
+            {% endif %}
         </div>
     </div>
 </body>
