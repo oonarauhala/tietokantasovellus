@@ -24,13 +24,6 @@ def get_all_feeding_times():
     result = db.session.execute(sql)
     return result.fetchall()    
 
-# Not in use atm
-def get_dino_feeding_times(dinosaur_id):
-    # No security problem since dinosaur_id is not user input
-    sql = f"SELECT TO_CHAR(date, 'YYYY:MM:DD'), TO_CHAR(time, 'HH24:MI') FROM feeding_times WHERE dinosaur = {dinosaur_id};"
-    result = db.session.execute(sql)
-    return result.fetchall()
-
 def get_user_credentials(username):
     sql = "SELECT username, password FROM users WHERE username=:username;"
     result = db.session.execute(sql, {"username":username})
