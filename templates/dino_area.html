@@ -54,6 +54,7 @@
             {% endfor %}
             {% if session.username %}
             <input type="submit" value="Reserve time">
+            <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
             </form>
         <!-- Feeding times loop ends-->
         {% else %}

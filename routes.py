@@ -1,7 +1,9 @@
+import secrets
 from werkzeug.wrappers import request
 from werkzeug.security import check_password_hash, generate_password_hash
 from app import app
 from flask import render_template, request, session, redirect
+from secrets import token_hex
 
 
 @app.route("/")
@@ -39,6 +41,8 @@ def login_result():
         session["username"] = username
         # Load possible reservation to session
         time = db.get_user_reservation(username)
+        # Add session csrf_token
+        session["csrf_token"] = secrets.token_hex(16)
         if time[0][0] != None:
             session["time"] = (time[0][0], time[0][1])
         return redirect("/")
