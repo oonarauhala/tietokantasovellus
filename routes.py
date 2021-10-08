@@ -1,3 +1,4 @@
+from os import abort
 import secrets
 from werkzeug.wrappers import request
 from werkzeug.security import check_password_hash, generate_password_hash
@@ -43,8 +44,12 @@ def login_result():
         time = db.get_user_reservation(username)
         # Add session csrf_token
         session["csrf_token"] = secrets.token_hex(16)
-        if time[0][0] != None:
-            session["time"] = (time[0][0], time[0][1])
+        try:
+            # time[0][0] = date, time[0][1] = time
+            session["time"] = (time[0][0], time[0][1]) # TÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+        except:
+            # No previous reservation
+            pass
         return redirect("/")
     # Login failed: wrong password
     # TODO: display msg
@@ -60,6 +65,7 @@ def register_result():
         add_user_result = db.add_user(username, password_hash)
         if add_user_result:
             session["username"] = username
+            session["csrf_token"] = secrets.token_hex(16)
             return redirect("/")
         # TODO: display msg
     return redirect("/login")
@@ -76,6 +82,9 @@ def area(id):
 
 @app.route("/reserve_result", methods=["POST"])
 def reserve_result():
+    # Check csrf_token
+    if session["csrf_token"] != request.form["csrf_token"]:
+        abort(403)
     # Update db if user has an earlier reservation
     old_time_id = db.get_user_reservation(session["username"])
     print(old_time_id[0][0])
@@ -117,10 +126,14 @@ def login_result_admin():
     if check_password_hash(result[0][1], password):
         # Login successful
         session["username"] = username
+        session["csrf_token"] = secrets.token_hex(16)
     return redirect("/admin")
 
 @app.route("/add_time", methods=["POST"])
 def add_time():
+    # Check csrf_token
+    if session["csrf_token"] != request.form["csrf_token"]:
+        abort(403)
     date = request.form["date"]
     time = request.form["time"]
     available = request.form["available"]
@@ -131,6 +144,9 @@ def add_time():
 
 @app.route("/update_time", methods=["POST"])
 def update_time():
+    # Check csrf_token
+    if session["csrf_token"] != request.form["csrf_token"]:
+        abort(403)
     date = request.form["date"]
     time = request.form["time"]
     available = request.form["available"]
@@ -141,6 +157,9 @@ def update_time():
 
 @app.route("/delete_time", methods=["POST"])
 def delete_time():
+    # Check csrf_token
+    if session["csrf_token"] != request.form["csrf_token"]:
+        abort(403)
     dinosaur_id = request.form["dinosaur_id"]
     time_id = request.form[str(dinosaur_id)]
     db.delete_time(time_id)

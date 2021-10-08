@@ -70,7 +70,7 @@ def update_old_time(time_id):
     db.session.commit()
 
 def get_user_reservation(username):
-    sql = "SELECT reserved_time FROM users WHERE username=:username;"
+    sql = "SELECT TO_CHAR(f.date, 'YYYY.MM.DD'), TO_CHAR(f.time, 'HH24:MI') FROM feeding_times f, users u WHERE username=:username AND f.id=u.reserved_time;"
     result = db.session.execute(sql, {"username":username})
     return result.fetchall()
 
