@@ -25,7 +25,6 @@ def login():
 @app.route("/profile")
 def profile():
     user_data = db.get_user_data(session["username"])
-    print(user_data)
     return render_template("profile.html", user_data=user_data)
 
 @app.route("/login_result", methods=["POST"])
@@ -46,7 +45,7 @@ def login_result():
         session["csrf_token"] = secrets.token_hex(16)
         try:
             # time[0][0] = date, time[0][1] = time
-            session["time"] = (time[0][0], time[0][1]) # TÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+            session["time"] = (time[0][0], time[0][1])
         except:
             # No previous reservation
             pass
@@ -87,9 +86,10 @@ def reserve_result():
         abort(403)
     # Update db if user has an earlier reservation
     old_time_id = db.get_user_reservation(session["username"])
-    print(old_time_id[0][0])
-    if old_time_id[0][0] is not None:
+    try:
         db.update_old_time(old_time_id[0][0])
+    except:
+        pass
     # Update reservation to db
     time_id = request.form["feeding_time"]
     db.add_reservation(session["username"], time_id)
@@ -138,7 +138,6 @@ def add_time():
     time = request.form["time"]
     available = request.form["available"]
     dinosaur_id = request.form["dinosaur_id"]
-    #print(date, time, available, dinosaur_id)
     db.post_new_time(date, time, available, dinosaur_id)
     return redirect("/admin")
 
