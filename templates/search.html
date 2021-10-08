@@ -59,7 +59,7 @@
             {% for dino in dinosaurs %}
             <div class="dino_box">
                 <h4>{{ dino.name }}</h5>
-                {{ dino.description }}
+                <img class="image" src="{{url_for('static', filename='dinokuva.jpg')}}">
             </div>
             <br>
             {% endfor %}

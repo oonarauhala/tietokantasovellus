@@ -1,4 +1,3 @@
-from sqlalchemy.orm import session
 from app import app
 from flask_sqlalchemy import SQLAlchemy
 from os import getenv
@@ -137,3 +136,4 @@ def get_search_results_text(text:str):
     sql = "SELECT name FROM areas WHERE LOWER(name) LIKE :text;"
     results.append(db.session.execute(sql, {"text":text}).fetchall())
     return results
+    
