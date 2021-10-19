@@ -1,4 +1,3 @@
-
 # Determines if (input) string is acceptable. Returns True if yes, otherwise False.
 def validate_string(string: str):
     # Length

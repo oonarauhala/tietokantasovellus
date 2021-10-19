@@ -2,9 +2,9 @@ from os import abort
 import secrets
 from werkzeug.wrappers import request
 from werkzeug.security import check_password_hash, generate_password_hash
-from app import app
 from flask import render_template, request, session, redirect
 from secrets import token_hex
+from app import app
 
 
 @app.route("/")
@@ -58,7 +58,6 @@ def login_result():
 def register_result():
     username = request.form["username_reg"]
     password = request.form["password_reg"]
-    # Validate inputs
     if validator.validate_string(username) and validator.validate_string(password):
         password_hash = generate_password_hash(password)
         add_user_result = db.add_user(username, password_hash)
@@ -75,13 +74,13 @@ def area(id):
     times = db.get_all_feeding_times()
     try:
         # User has a reserved time
-        return render_template("dino_area.html", dinosaurs=dinosaurs, times=times, user_time=session["time"])
+        return render_template("dino_area.html", dinosaurs=dinosaurs, times=times,
+            user_time=session["time"])
     except:
         return render_template("dino_area.html", dinosaurs=dinosaurs, times=times)
 
 @app.route("/reserve_result", methods=["POST"])
 def reserve_result():
-    # Check csrf_token
     if session["csrf_token"] != request.form["csrf_token"]:
         abort(403)
     # Update db if user has an earlier reservation
@@ -90,7 +89,6 @@ def reserve_result():
         db.update_old_time(old_time_id[0][0])
     except:
         pass
-    # Update reservation to db
     time_id = request.form["feeding_time"]
     db.add_reservation(session["username"], time_id)
     time = db.get_feeding_time(time_id)
@@ -100,7 +98,6 @@ def reserve_result():
 @app.route("/admin")
 def admin():
     dinosaurs = db.get_dinosaur_names_ids()
-    # Iterator -> list
     dinosaurs=list(dinosaurs)
     times = list(db.get_all_times_for_edit())
     try:
@@ -131,7 +128,6 @@ def login_result_admin():
 
 @app.route("/add_time", methods=["POST"])
 def add_time():
-    # Check csrf_token
     if session["csrf_token"] != request.form["csrf_token"]:
         abort(403)
     date = request.form["date"]
@@ -143,7 +139,6 @@ def add_time():
 
 @app.route("/update_time", methods=["POST"])
 def update_time():
-    # Check csrf_token
     if session["csrf_token"] != request.form["csrf_token"]:
         abort(403)
     date = request.form["date"]
@@ -156,7 +151,6 @@ def update_time():
 
 @app.route("/delete_time", methods=["POST"])
 def delete_time():
-    # Check csrf_token
     if session["csrf_token"] != request.form["csrf_token"]:
         abort(403)
     dinosaur_id = request.form["dinosaur_id"]
@@ -172,14 +166,12 @@ def search():
 
 @app.route("/search_result", methods=["POST"])
 def search_result():
-    # Search using text
     try:
         date = request.form["search_date"]
         result_dates= list(db.get_search_results_date(date))
         return render_template("/search_result.html", times=result_dates)
     except:
         pass
-    # Search using text
     try:
         text = request.form["search_text"]
         # TODO validate date

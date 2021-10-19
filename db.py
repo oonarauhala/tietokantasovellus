@@ -1,6 +1,7 @@
-from app import app
 from flask_sqlalchemy import SQLAlchemy
 from os import getenv
+from app import app
+
 
 app.config["SQLALCHEMY_DATABASE_URI"] = getenv("DATABASE_URL")
 db = SQLAlchemy(app)
@@ -17,9 +18,10 @@ def get_area_dinosaurs(area):
     return result.fetchall()
 
 def get_all_feeding_times():
-    sql = f"""SELECT TO_CHAR(f.date, 'YYYY.MM.DD'), TO_CHAR(f.time, 'HH24:MI'), d.id AS dinosaur_id, f.id AS time_id, f.available
-              FROM feeding_times f, dinosaurs d 
-              WHERE f.dinosaur = d.id;"""
+    sql = """SELECT TO_CHAR(f.date, 'YYYY.MM.DD'), TO_CHAR(f.time, 'HH24:MI'), d.id AS dinosaur_id, f.id AS time_id,
+             f.available
+             FROM feeding_times f, dinosaurs d 
+             WHERE f.dinosaur = d.id;"""
     result = db.session.execute(sql)
     return result.fetchall()    
 
@@ -50,7 +52,8 @@ def add_reservation(username, time_id):
     db.session.commit()
 
 def get_user_data(username):
-    sql = f"""SELECT u.username, TO_CHAR(f.date, 'YYYY.MM.DD') AS date, TO_CHAR(f.time, 'HH24:MI') AS time 
+    sql = """SELECT u.username, TO_CHAR(f.date, 'YYYY.MM.DD') AS date,
+              TO_CHAR(f.time, 'HH24:MI') AS time
               FROM users u LEFT JOIN feeding_times f 
               ON u.reserved_time=f.id 
               WHERE username=:username;"""
@@ -58,7 +61,8 @@ def get_user_data(username):
     return result.fetchall()
 
 def get_feeding_time(id):
-    sql = f"SELECT TO_CHAR(date, 'YYYY.MM.DD'), TO_CHAR(time, 'HH24:MI') FROM feeding_times WHERE id={id}"
+    sql = f"""SELECT TO_CHAR(date, 'YYYY.MM.DD'), TO_CHAR(time, 'HH24:MI')
+              FROM feeding_times WHERE id={id}"""
     result = db.session.execute(sql)
     return result.fetchall()
 
@@ -84,17 +88,21 @@ def get_dinosaur_names_ids():
     return result
 
 def post_new_time(date, time, available, dinosaur_id):
-    sql = "INSERT INTO feeding_times(date, time, available, dinosaur) VALUES (:date, :time, :available, :dinosaur_id);"
-    db.session.execute(sql, {"date":date, "time":time, "available":available, "dinosaur_id":dinosaur_id})
+    sql = """INSERT INTO feeding_times(date, time, available, dinosaur)
+             VALUES (:date, :time, :available, :dinosaur_id);"""
+    db.session.execute(sql, 
+        {"date":date, "time":time, "available":available, "dinosaur_id":dinosaur_id})
     db.session.commit()
 
 def get_all_times_for_edit():
-    sql = "SELECT d.id AS dinosaur_id, f.id AS time_id, TO_CHAR(f.date, 'YYYY.MM.DD') AS date, TO_CHAR(f.time, 'HH24:MI') AS time, f.available FROM dinosaurs d, feeding_times f WHERE d.id=f.dinosaur;"
+    sql = """SELECT d.id AS dinosaur_id, f.id AS time_id, TO_CHAR(f.date, 'YYYY.MM.DD')
+             AS date, TO_CHAR(f.time, 'HH24:MI') AS time, f.available
+             FROM dinosaurs d, feeding_times f WHERE d.id=f.dinosaur;"""
     result = db.session.execute(sql)
     return result
 
 def post_time_update(date, time, available, time_id):
-    sql = """UPDATE feeding_times 
+    sql = """UPDATE feeding_times
             SET date=:date, time=:time, available=:available
             WHERE id=:time_id"""
     db.session.execute(sql, {"date":date, "time":time, "available":available, "time_id":time_id})
@@ -106,20 +114,21 @@ def delete_time(time_id):
     db.session.commit()
 
 def get_todays_times():
-    sql = """SELECT TO_CHAR(f.date, 'YYYY.MM.DD') AS date, TO_CHAR(f.time, 'HH24:MI') AS time, d.name 
+    sql = """SELECT TO_CHAR(f.date, 'YYYY.MM.DD') AS date, TO_CHAR(f.time, 'HH24:MI') AS time, d.name
             FROM feeding_times f, dinosaurs d WHERE d.id=f.dinosaur AND f.date=CURRENT_DATE 
             ORDER BY date, time;"""
     return db.session.execute(sql)
 
 def get_random_dino_info():
-    sql = """SELECT d.id, d.name, d.description, a.name AS area FROM dinosaurs d, areas a 
+    sql = """SELECT d.id, d.name, d.description, a.name AS area FROM dinosaurs d, areas a
             WHERE d.location=a.id 
             ORDER BY random() 
             LIMIT 5;"""
     return db.session.execute(sql)
 
 def get_search_results_date(date: str):
-    sql = f"""SELECT TO_CHAR(f.date, 'YYYY.MM.DD') AS date, TO_CHAR(f.time, 'HH24:MI') AS time, d.name 
+    sql = f"""SELECT TO_CHAR(f.date, 'YYYY.MM.DD') AS date, TO_CHAR(f.time, 'HH24:MI') AS time,
+            d.name
             FROM feeding_times f, dinosaurs d 
             WHERE d.id=f.dinosaur AND date='{date}'::DATE;"""
     return db.session.execute(sql)
