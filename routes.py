@@ -9,7 +9,7 @@ from app import app
 
 @app.route("/")
 def index():
-    areas = db.get_area()
+    areas = users.get_area()
     return render_template("index.html", area1=areas[0][1], area2=areas[1][1],
     area3=areas[2][1], area4=areas[3][1])
 
@@ -24,14 +24,14 @@ def login():
 
 @app.route("/profile")
 def profile():
-    user_data = db.get_user_data(session["username"])
+    user_data = users.get_user_data(session["username"])
     return render_template("profile.html", user_data=user_data)
 
 @app.route("/login_result", methods=["POST"])
 def login_result():
     username = request.form["username"]
     password = request.form["password"]
-    result = db.get_user_credentials(username)
+    result = users.get_user_credentials(username)
     if not result:
         # Login failed: no username
         # TODO: display msg
@@ -40,7 +40,7 @@ def login_result():
         # Login successful
         session["username"] = username
         # Load possible reservation to session
-        time = db.get_user_reservation(username)
+        time = users.get_user_reservation(username)
         # Add session csrf_token
         session["csrf_token"] = secrets.token_hex(16)
         try:
@@ -60,7 +60,7 @@ def register_result():
     password = request.form["password_reg"]
     if validator.validate_string(username) and validator.validate_string(password):
         password_hash = generate_password_hash(password)
-        add_user_result = db.add_user(username, password_hash)
+        add_user_result = users.add_user(username, password_hash)
         if add_user_result:
             session["username"] = username
             session["csrf_token"] = secrets.token_hex(16)
@@ -70,8 +70,8 @@ def register_result():
 
 @app.route("/area<int:id>")
 def area(id):
-    dinosaurs = db.get_area_dinosaurs(id)
-    times = db.get_all_feeding_times()
+    dinosaurs = users.get_area_dinosaurs(id)
+    times = users.get_all_feeding_times()
     try:
         # User has a reserved time
         return render_template("dino_area.html", dinosaurs=dinosaurs, times=times,
@@ -83,16 +83,16 @@ def area(id):
 def reserve_result():
     if session["csrf_token"] != request.form["csrf_token"]:
         abort(403)
-    # Update db if user has an earlier reservation
-    old_time_id = db.get_user_reservation(session["username"])
+    # Update users if user has an earlier reservation
+    old_time_id = users.get_user_reservation(session["username"])
     try:
-        db.update_old_time(old_time_id[0][0])
+        users.update_old_time(old_time_id[0][0])
     except:
         pass
     try:
         time_id = request.form["feeding_time"]
-        db.add_reservation(session["username"], time_id)
-        time = db.get_feeding_time(time_id)
+        users.add_reservation(session["username"], time_id)
+        time = users.get_feeding_time(time_id)
         session["time"] = (time[0][0], time[0][1])
         return redirect("/profile")
     except:
@@ -100,11 +100,11 @@ def reserve_result():
 
 @app.route("/admin")
 def admin():
-    dinosaurs = db.get_dinosaur_names_ids()
+    dinosaurs = users.get_dinosaur_names_ids()
     dinosaurs=list(dinosaurs)
-    times = list(db.get_all_times_for_edit())
+    times = list(users.get_all_times_for_edit())
     try:
-        admin_status = db.get_admin_status(session["username"])[0]
+        admin_status = users.get_admin_status(session["username"])[0]
         if admin_status:
             return render_template("admin.html", dinosaurs=dinosaurs, times=times)
         return redirect("/login_admin")
@@ -119,7 +119,7 @@ def login_admin():
 def login_result_admin():
     username = request.form["username"]
     password = request.form["password"]
-    result = db.get_user_credentials(username)
+    result = users.get_user_credentials(username)
     if not result:
         # Login failed: no username
         return redirect("/login_admin")
@@ -137,7 +137,7 @@ def add_time():
     time = request.form["time"]
     available = request.form["available"]
     dinosaur_id = request.form["dinosaur_id"]
-    db.post_new_time(date, time, available, dinosaur_id)
+    users.post_new_time(date, time, available, dinosaur_id)
     return redirect("/admin")
 
 @app.route("/update_time", methods=["POST"])
@@ -149,7 +149,7 @@ def update_time():
     available = request.form["available"]
     dinosaur_id = request.form["dinosaur_id"]
     time_id = request.form[str(dinosaur_id)]
-    db.post_time_update(date, time, available, time_id)
+    users.post_time_update(date, time, available, time_id)
     return redirect("/admin")
 
 @app.route("/delete_time", methods=["POST"])
@@ -158,20 +158,20 @@ def delete_time():
         abort(403)
     dinosaur_id = request.form["dinosaur_id"]
     time_id = request.form[str(dinosaur_id)]
-    db.delete_time(time_id)
+    users.delete_time(time_id)
     return redirect("/admin")
 
 @app.route("/search")
 def search():
-    times = list(db.get_todays_times())
-    dinosaurs = list(db.get_random_dino_info())
+    times = list(users.get_todays_times())
+    dinosaurs = list(users.get_random_dino_info())
     return render_template("search.html", times=times, dinosaurs=dinosaurs)
 
 @app.route("/search_result", methods=["POST"])
 def search_result():
     try:
         date = request.form["search_date"]
-        result_dates= list(db.get_search_results_date(date))
+        result_dates= list(users.get_search_results_date(date))
         return render_template("/search_result.html", times=result_dates)
     except:
         pass
@@ -179,7 +179,7 @@ def search_result():
         text = request.form["search_text"]
         if text == "":
             return redirect("/search")
-        text_result = list(db.get_search_results_text(text))
+        text_result = list(users.get_search_results_text(text))
         # Check if result is not empty
         counter = 0
         for result_list in text_result:
@@ -192,4 +192,4 @@ def search_result():
         pass
     return redirect("/search")
 
-import db, validator
+import users, validator
