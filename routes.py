@@ -2,7 +2,7 @@ from os import abort
 import secrets
 from werkzeug.wrappers import request
 from werkzeug.security import check_password_hash, generate_password_hash
-from flask import render_template, request, session, redirect
+from flask import render_template, request, session, redirect, flash
 from secrets import token_hex
 from app import app
 
@@ -34,24 +34,21 @@ def login_result():
     result = users.get_user_credentials(username)
     if not result:
         # Login failed: no username
-        # TODO: display msg
+        flash("Wrong username or password")
         return redirect("/login")
     if check_password_hash(result[0][1], password):
         # Login successful
         session["username"] = username
-        # Load possible reservation to session
         time = users.get_user_reservation(username)
-        # Add session csrf_token
         session["csrf_token"] = secrets.token_hex(16)
         try:
-            # time[0][0] = date, time[0][1] = time
             session["time"] = (time[0][0], time[0][1])
         except:
             # No previous reservation
             pass
         return redirect("/")
     # Login failed: wrong password
-    # TODO: display msg
+    flash("Wrong username or password")
     return redirect("/login")
 
 @app.route("/register_result", methods=["POST"])
@@ -65,7 +62,7 @@ def register_result():
             session["username"] = username
             session["csrf_token"] = secrets.token_hex(16)
             return redirect("/")
-        # TODO: display msg
+        flash("Username not available")
     return redirect("/login")
 
 @app.route("/area<int:id>")

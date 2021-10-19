@@ -15,6 +15,13 @@
         <h1>DinoPark home page!</h1>
     </div>
     <!-- Content header ends-->
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages %}
+                {{ message }}
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
     <br>
     <h2>Login</h2>
     <form action="/login_result" method="POST">

@@ -27,6 +27,13 @@
     {% endif %}        
     </div>
     <!-- Content header ends-->
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages %}
+                {{ message }}
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
     <h2>Hello {{ user_data[0][0] }}!</h2>
     {% if user_data[0][1] %}
     <p>You have a feeding show reservation on {{ user_data[0][1] }} at {{ user_data[0][2] }}</p>
