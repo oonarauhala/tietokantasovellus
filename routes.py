@@ -10,13 +10,6 @@ from app import app
 @app.route("/")
 def index():
     areas = users.get_area()
-    try:
-        # Flash message sent to area page
-        time = session["time"]
-        flash(f"""You have a reservation on {time[0]} at {time[1]}.
-                 If you make a new reservation, you will lose this reservation.""")
-    except:
-        pass
     return render_template("index.html", area1=areas[0][1], area2=areas[1][1],
     area3=areas[2][1], area4=areas[3][1])
 
