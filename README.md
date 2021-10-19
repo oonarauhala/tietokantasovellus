@@ -5,6 +5,7 @@ A web application for a dinosaur park, where users can view information about th
 
 ## Test DinoPark on Heroku
 https://dino-park-app.herokuapp.com/
+Please feel free to create your own user. If you want to test admin features, user: Boss, pw: spielberg. Admin login can be accessed at /admin. Please report any bugs :]
 
 ### Features
 * User account creation and login
@@ -20,3 +21,14 @@ The following features are implemented and working:
 * User account creation and login
 * Viewing dinosaur info
 * Reserving feeding times
+
+### Progress 10.10
+Overview:
+All critical features have been implemented. The app currently does not have graphics or a good user interface. Search/browse can be accessed at /search.
+The following features are implemented and working:
+* Admin account login 
+* Reserving feeding times
+* Searching for dinosaurs (by name)
+* Searching for feeding times (by date)
+* Browsing dinosaurs & feeding times today
+* Admins can edit/remove/add feeding times
