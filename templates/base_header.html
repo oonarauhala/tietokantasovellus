@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>DinoPark</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="flex">
+        <h1>DinoPark</h1>
+    </div>
+    <div class="flex">
+        <div class="menuitem">
+            <a href="/search">
+                <button class="button" id="search_btn">Search</button>
+            </a>
+        </div>
+        <div class="menuitem">
+            {% if session.username %}
+            <a href="/profile">
+                <button class="button" id="profile_btn">Profile</button>
+            </a>
+            {% else %}
+            <a href="/login">
+                <button class="button" id="login_btn">Login/register</button>
+            </a>
+            {% endif %}
+        </div>
+        <div class="menuitem">
+            {% if session.username %}
+            <a href="/logout">
+                <button class="button" id="logout_btn">Logout</button>
+            </a>
+            {% endif %}
+        </div>
+    </div>
+    {% block content %}
+    {% endblock %}
+</body>
+</html>
