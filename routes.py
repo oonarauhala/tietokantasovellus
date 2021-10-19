@@ -89,11 +89,14 @@ def reserve_result():
         db.update_old_time(old_time_id[0][0])
     except:
         pass
-    time_id = request.form["feeding_time"]
-    db.add_reservation(session["username"], time_id)
-    time = db.get_feeding_time(time_id)
-    session["time"] = (time[0][0], time[0][1])
-    return redirect("/profile")
+    try:
+        time_id = request.form["feeding_time"]
+        db.add_reservation(session["username"], time_id)
+        time = db.get_feeding_time(time_id)
+        session["time"] = (time[0][0], time[0][1])
+        return redirect("/profile")
+    except:
+        return redirect("/")
 
 @app.route("/admin")
 def admin():
@@ -174,7 +177,8 @@ def search_result():
         pass
     try:
         text = request.form["search_text"]
-        # TODO validate date
+        if text == "":
+            return redirect("/search")
         text_result = list(db.get_search_results_text(text))
         # Check if result is not empty
         counter = 0
