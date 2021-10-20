@@ -16,8 +16,11 @@ def index():
 @app.route("/logout")
 def logout():
     del session["username"]
-    del session["time"]
     del session["csrf_token"]
+    try:
+        del session["time"]
+    except:
+        pass
     return redirect("/")
 
 @app.route("/login")
