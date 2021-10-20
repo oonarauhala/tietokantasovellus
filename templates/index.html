@@ -2,7 +2,7 @@
 {% block content %}
     <br>
     <div id="mapbox">
-        <img id="map" src="{{url_for('static', filename='map_edited.png')}}">
+        <img id="map" usemap="#area1" src="{{url_for('static', filename='map_edited.png')}}">
     </div>
     <br>
     <a href="/area1">
@@ -21,4 +21,10 @@
         <button class="button" id="area_4">{{ area4 }}</button>
     </a>
     <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
+    <!-- Maps -->
+    <map name="area1">
+        <!-- Areas -->
+        <area shape="poly" href="/area1" coords="841, 541, 715, 520, 670, 592, 674, 703, 685, 713, 710, 701, 726, 726, 747, 730, 753, 752, 778, 747, 789, 721, 804, 705, 826, 717, 848, 709, 856, 688, 842, 681, 837, 644, 850, 674, 845, 633, 848, 623, 843, 614, 833, 610, 842, 599, 839, 585, 853, 570">
+    </map>
+    
 {% endblock %}
