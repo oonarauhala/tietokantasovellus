@@ -1,20 +1,5 @@
-<!DOCTYPE html>
-
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <title>DinoPark</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-</head>
-<body>
-    <!-- Content header -->
-    <div id="content_header">
-        <a href="/">
-            <img src="{{url_for('static', filename='icon.png')}}">
-        </a>
-        <h1>DinoPark home page!</h1>
-    </div>
-    <!-- Content header ends-->
+{% extends "base_header.html" %}
+{% block content %}
     {% with messages = get_flashed_messages() %}
         {% if messages %}
             {% for message in messages %}
@@ -45,5 +30,4 @@
         <br>
         <input type="submit" value="Register">
     </form>
-</body>
-</html>
+{% endblock %}

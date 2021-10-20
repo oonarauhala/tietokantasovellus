@@ -1,32 +1,5 @@
-<!DOCTYPE html>
-
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <title>DinoPark</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-</head>
-<body>
-    <!-- Content header -->
-    <div id="content_header">
-        <a href="/">
-            <img src="{{url_for('static', filename='icon.png')}}">
-        </a>
-        <h1>DinoPark home page!</h1>
-        {% if session.username %}
-        <a href="/logout">
-            <button class="button" id="logout_btn">Logout</button>
-        </a>
-        <a href="/profile">
-            <button class="button" id="profile_btn">Profile</button>
-        </a>
-        {% else %}
-        <a href="/login">
-            <button class="button" id="login_btn">Login/register</button>
-        </a>
-    {% endif %}        
-    </div>
-    <!-- Content header ends-->
+{% extends "base_header.html" %}
+{% block content %}
     {% with messages = get_flashed_messages() %}
         {% if messages %}
             {% for message in messages %}
@@ -38,5 +11,4 @@
     {% if user_data[0][1] %}
     <p>You have a feeding show reservation on {{ user_data[0][1] }} at {{ user_data[0][2] }}</p>
     {% endif %}
-</body>
-</html>
+{% endblock %}

@@ -1,32 +1,5 @@
-<!DOCTYPE html>
-
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <title>DinoPark</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-</head>
-<body>
-    <!-- Content header -->
-    <div id="content_header">
-        <a href="/">
-            <img src="{{url_for('static', filename='icon.png')}}">
-        </a>
-        <h1>DinoPark home page!</h1>
-        {% if session.username %}
-        <a href="/logout">
-            <button class="button" id="logout_btn">Logout</button>
-        </a>
-        <a href="/profile">
-            <button class="button" id="profile_btn">Profile</button>
-        </a>
-        {% else %}
-        <a href="/login">
-            <button class="button" id="login_btn">Login/register</button>
-        </a>
-    {% endif %}        
-    </div>
-    <!-- Content header ends-->
+{% extends "base_header.html" %}
+{% block content %}
     {% if user_time %}
     <div id="warning">
         <p>You have a reservation on {{ user_time[0] }} at {{ user_time[1] }}. If you make a new reservation, you will lose this one.</p>
@@ -69,5 +42,4 @@
     </div>
     {% endfor %}
     <!-- Dinosaur loop ends-->
-</body>
-</html>
+{% endblock %}
