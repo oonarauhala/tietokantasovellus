@@ -6,7 +6,9 @@
             <p>You have a reservation on {{ user_time[0] }} at {{ user_time[1] }}. If you make a new reservation, you will lose this one.</p>
         </div>
         {% endif %}
-        <!-- Dinosaur loop -->
+    </div>
+    <!-- Dinosaur loop -->
+    <div class="flex">
         {% for dinosaur in dinosaurs %}
             <div class="area_dino_box">
                 <h2>{{ dinosaur.name }}</h2>
@@ -29,16 +31,8 @@
                     <input type="submit" value="Reserve time">
                     <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
                     </form>
+                    {% endif %}
                 <!-- Feeding times loop ends-->
-                {% else %}
-                <script>
-                    document.addEventListener('readystatechange', function(event) {
-                        if (event.target.readyState === "complete") {
-                            setTimeout(() =>  { alert("Log in to reserve feeding show times!")
-                        }, 3000)}
-                    })
-                </script>
-                {% endif %}
             </div>
         {% endfor %}
         <!-- Dinosaur loop ends-->
