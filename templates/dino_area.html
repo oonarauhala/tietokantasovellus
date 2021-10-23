@@ -1,45 +1,46 @@
 {% extends "base_header.html" %}
 {% block content %}
-    {% if user_time %}
-    <div id="warning">
-        <p>You have a reservation on {{ user_time[0] }} at {{ user_time[1] }}. If you make a new reservation, you will lose this one.</p>
-    </div>
-    {% endif %}
-    <!-- Dinosaur loop -->
-    {% for dinosaur in dinosaurs %}
-    <div>
-        <h2>{{ dinosaur.name }}</h2>
-        <p>{{ dinosaur.description }}</p>
-        <p>Dinosaur lives in area {{ dinosaur.location }}</p>
-        <p>Feeding show times :</p>
-        <!-- Feeding times loop-->
-            <form action="/reserve_result" method="POST">
-            {% for time in times %}
-                {% if time.dinosaur_id==dinosaur.id %}
-                    <!-- If time is available, display normal text-->
-                    {% if time.available > 0 %}
-                        <input type="radio" name="feeding_time" id='time.time_id' value='{{ time.time_id }}'>{{ time[0] }} at {{ time[1] }}
-                    {% else %}
-                        <input type="radio" name="feeding_time" id='time.time_id' value='{{ time.time_id }}' disabled>{{ time[0] }} at {{ time[1] }} Not available
-                    {% endif %}
-                    <br>
-                {% endif %}
-            {% endfor %}
-            {% if session.username %}
-            <input type="submit" value="Reserve time">
-            <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
-            </form>
-        <!-- Feeding times loop ends-->
-        {% else %}
-        <script>
-            document.addEventListener('readystatechange', function(event) {
-                if (event.target.readyState === "complete") {
-                    setTimeout(() =>  { alert("Log in to reserve feeding show times!")
-                }, 3000)}
-            })
-        </script>
+    <div class="flex">
+        {% if user_time %}
+        <div id="warning">
+            <p>You have a reservation on {{ user_time[0] }} at {{ user_time[1] }}. If you make a new reservation, you will lose this one.</p>
+        </div>
         {% endif %}
+        <!-- Dinosaur loop -->
+        {% for dinosaur in dinosaurs %}
+            <div class="area_dino_box">
+                <h2>{{ dinosaur.name }}</h2>
+                <p>{{ dinosaur.description }}</p>
+                <p>Feeding show times :</p>
+                <!-- Feeding times loop-->
+                    <form action="/reserve_result" method="POST">
+                    {% for time in times %}
+                        {% if time.dinosaur_id==dinosaur.id %}
+                            <!-- If time is available, display normal text-->
+                            {% if time.available > 0 %}
+                                <input type="radio" name="feeding_time" id='time.time_id' value='{{ time.time_id }}'>{{ time[0] }} at {{ time[1] }}
+                            {% else %}
+                                <input type="radio" name="feeding_time" id='time.time_id' value='{{ time.time_id }}' disabled>{{ time[0] }} at {{ time[1] }} Not available
+                            {% endif %}
+                            <br>
+                        {% endif %}
+                    {% endfor %}
+                    {% if session.username %}
+                    <input type="submit" value="Reserve time">
+                    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+                    </form>
+                <!-- Feeding times loop ends-->
+                {% else %}
+                <script>
+                    document.addEventListener('readystatechange', function(event) {
+                        if (event.target.readyState === "complete") {
+                            setTimeout(() =>  { alert("Log in to reserve feeding show times!")
+                        }, 3000)}
+                    })
+                </script>
+                {% endif %}
+            </div>
+        {% endfor %}
+        <!-- Dinosaur loop ends-->
     </div>
-    {% endfor %}
-    <!-- Dinosaur loop ends-->
 {% endblock %}
