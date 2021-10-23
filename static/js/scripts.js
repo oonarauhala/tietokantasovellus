@@ -1,7 +1,29 @@
 'use strict';
 
-const button_1_click = () => {
-    document.getElementById("area_0").style.backgroundColor="#FF0000";
+const map_hover = (area) => {
+    console.log("hovering");
+    // See notes abt this function
+    var map;
+    document.querySelectorAll('*').forEach(function(node) {
+        if (node.id == "map") {
+            console.log(node);
+            map = node;
+        }
+    });
+    switch (area) {
+        case 1:
+            map.src = "static/map_edited_a1.png"
+            break;
+        case 2:
+            map.src = "static/map_edited_a2.png"
+            break;
+        case 3:
+            map.src = "static/map_edited_a3.png"
+            break;
+        case 4:
+            map.src = "static/map_edited_a4.png"
+            break;
+    };
 };
 
 const show_radio_in_update = (class_name, select_id) => {

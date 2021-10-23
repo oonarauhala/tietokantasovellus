@@ -2,29 +2,17 @@
 {% block content %}
     <br>
     <div id="mapbox">
-        <img id="map" usemap="#area1" src="{{url_for('static', filename='map_edited.png')}}">
+        <img id="map" usemap="#areas" src="{{url_for('static', filename='map_edited.png')}}">
     </div>
     <br>
-    <a href="/area1">
-    <button class="button" id="area_1">{{ area1 }}</button>
-    </a>
-    <br>
-    <a href="/area2">
-        <button class="button" id="area_2">{{ area2 }}</button>
-    </a>
-    <br>
-    <a href="/area3">
-        <button class="button" id="area_3">{{ area3 }}</button>
-    </a>
-    <br>
-    <a href="/area4">
-        <button class="button" id="area_4">{{ area4 }}</button>
-    </a>
-    <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/scripts.js') }}" defer></script>
     <!-- Maps -->
-    <map name="area1">
+    <map name="areas">
         <!-- Areas -->
-        <area shape="poly" href="/area1" coords="841, 541, 715, 520, 670, 592, 674, 703, 685, 713, 710, 701, 726, 726, 747, 730, 753, 752, 778, 747, 789, 721, 804, 705, 826, 717, 848, 709, 856, 688, 842, 681, 837, 644, 850, 674, 845, 633, 848, 623, 843, 614, 833, 610, 842, 599, 839, 585, 853, 570">
+        <area shape="poly" href="/area1" onmouseover="map_hover(1)" coords="669, 702, 761, 753, 851, 708, 844, 542, 714, 520, 670, 594">
+        <area shape="poly" href="/area2" onmouseover="map_hover(2)" coords="844, 530, 869, 431, 717, 253, 570, 234, 478, 56, 308, 134, 399, 275, 405, 454, 382, 574, 665, 590, 712, 511">
+        <area shape="poly" href="/area3" onmouseover="map_hover(3)" coords="296, 140, 256, 118, 123, 295, 186, 445, 353, 508, 393, 454, 390, 281">
+        <area shape="poly" href="/area3" onmouseover="map_hover(4)" coords="186, 453, 17, 757, 58, 816, 658, 708, 660, 599, 379, 583, 349, 515">    
     </map>
     
 {% endblock %}
