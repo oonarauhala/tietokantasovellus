@@ -7,8 +7,16 @@
             {% endfor %}
         {% endif %}
     {% endwith %}
-    <h2>Hello {{ user_data[0][0] }}!</h2>
-    {% if user_data[0][1] %}
-    <p>You have a feeding show reservation on {{ user_data[0][1] }} at {{ user_data[0][2] }}</p>
-    {% endif %}
+    <div class="flex">
+        <div class="profile_content">
+            <div class="profile_content">
+                <h2>Hello {{ user_data[0][0] }}!</h2> 
+            </div>
+            <div class="profile_content">
+                {% if user_data[0][1] %}
+                <p>You have a feeding show reservation on {{ user_data[0][1] }} at {{ user_data[0][2] }}</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
 {% endblock %}

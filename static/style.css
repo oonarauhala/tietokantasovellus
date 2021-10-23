@@ -113,3 +113,9 @@ a, a:visited {
 .area_dino_box {
     margin: 30px;
 }
+
+.profile_content {
+    display: flex;
+    flex-direction: column; 
+    justify-content: center;  
+}
