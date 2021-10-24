@@ -5,7 +5,7 @@ A web application for a dinosaur park, where users can view information about th
 
 ## Test DinoPark on Heroku
 https://dino-park-app.herokuapp.com/
-Please feel free to create your own user. If you want to test admin features, user: Boss, pw: spielberg. Admin login can be accessed at /admin. Please report any bugs :]
+Please feel free to create your own user. If you want to test admin features, user: Boss, pw: spielberg. Admin login can be accessed at /admin. The database currently only has content until 16.10.2021. If you are accessing the app after that, please go to admin and add some feeding times manually for the full experience.
 
 ### Features
 * User account creation and login
@@ -32,3 +32,12 @@ The following features are implemented and working:
 * Searching for feeding times (by date)
 * Browsing dinosaurs & feeding times today
 * Admins can edit/remove/add feeding times
+
+### Progress 24.10 final turn in
+Overview:
+All planned features have been implemented and the app has basic graphics. Some notes about the code and app itself:
+* The map_hover() function in scripts.js could be improved. For some reason .getElementById did not work here.
+* All dinosaurs share the same image, which could be improved. This photo is also not saved in the db. The correct version would have an image in dinosaurs db table.
+* Search & browse content could be improved by adding links to reserving feeding times.
+* In the Heroku version of the app, the homepage map seems a bit slow sometimes.
+* The homepage map could have some text explaining the diferent areas.
